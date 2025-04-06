@@ -4,7 +4,7 @@ import { FaFacebook } from 'react-icons/fa';
 
 const SignIn = () => {
   return (
-    <section className="py-20 min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400">
+    <section className="py-20 min-h-screen flex items-center justify-center ">
       <div className="w-full max-w-lg bg-white p-10 rounded-xl shadow-xl">
         <h2 className="text-3xl font-semibold text-center mb-6">Welcome Back</h2>
 
