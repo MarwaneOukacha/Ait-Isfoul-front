@@ -16,13 +16,19 @@ const Footer = () => {
           <div className='flex items-center gap-2 justify-center lg:justify-start'>
             <FaEnvelope className='text-accent' />
             <a href='mailto:info@aitisfoulhotel.com' className='hover:underline'>
-              aitisfoul@gmail.com
+              info@aitisfoul.com
             </a>
           </div>
           <div className='flex items-center gap-2 justify-center lg:justify-start'>
             <FaPhone className='text-accent' />
             <a href='tel:+212600000000' className='hover:underline'>
               +212 670-226639
+            </a>
+          </div>
+          <div className='flex items-center gap-2 justify-center lg:justify-start'>
+            <FaPhone className='text-accent' />
+            <a href='tel:+212600000000' className='hover:underline'>
+              +212 666-125727
             </a>
           </div>
         </div>
