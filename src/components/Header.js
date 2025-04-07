@@ -87,9 +87,12 @@ const Header = () => {
               {userDropdownOpen && (
                 <div className='absolute right-0 mt-2 bg-white border shadow-lg rounded-md w-[180px] text-sm z-50'>
                   <Link to='/my-bookings' className='block px-4 py-2 hover:bg-gray-100'>My Bookings</Link>
-                  <button onClick={() => setUser(null)} className='w-full text-left px-4 py-2 hover:bg-gray-100'>Logout</button>
-                </div>
-              )}
+                  <button onClick={() => {
+                    localStorage.removeItem('authToken'); // Remove the auth token from localStorage
+                    setUser(null); // Update the user state
+                  }} className='w-full text-left px-4 py-2 hover:bg-gray-100'>Logout</button>
+                                </div>
+                              )}
             </div>
           )}
         </nav>
