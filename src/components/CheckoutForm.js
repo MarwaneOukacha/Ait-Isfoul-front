@@ -1,50 +1,52 @@
-// components/CheckoutForm.jsx
-import React, { useEffect, useState } from "react";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { PaymentElement } from "@stripe/react-stripe-js";
+import { useState } from "react";
+import { useStripe, useElements } from "@stripe/react-stripe-js";
 
-const CheckoutForm = () => {
+export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
-  const [clientSecret, setClientSecret] = useState('');
 
-  useEffect(() => {
-    // Call your backend to create the PaymentIntent
-    fetch("http://localhost:5000/create-payment-intent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: 2500 }) // replace with dynamic amount
-    })
-      .then(res => res.json())
-      .then(data => setClientSecret(data.clientSecret));
-  }, []);
+  const [message, setMessage] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!stripe || !elements) return;
 
-    const result = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
+    if (!stripe || !elements) {
+      // Stripe.js has not yet loaded.
+      // Make sure to disable form submission until Stripe.js has loaded.
+      return;
+    }
+
+    setIsProcessing(true);
+
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        // Make sure to change this to your payment completion page
+        return_url: `${window.location.origin}/completion`,
       },
     });
 
-    if (result.error) {
-      console.error(result.error.message);
+    if (error.type === "card_error" || error.type === "validation_error") {
+      setMessage(error.message);
     } else {
-      if (result.paymentIntent.status === "succeeded") {
-        console.log("Payment successful!");
-      }
+      setMessage("An unexpected error occured.");
     }
+
+    setIsProcessing(false);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <CardElement className="p-4 border rounded-md" />
-      <button type="submit" disabled={!stripe} className="px-6 py-2 bg-accent text-white">
-        Pay Now
+    <form id="payment-form" onSubmit={handleSubmit}>
+      <PaymentElement id="payment-element" />
+      <button disabled={isProcessing || !stripe || !elements} id="submit">
+        <span id="button-text">
+          {isProcessing ? "Processing ... " : "Pay now"}
+        </span>
       </button>
+      {/* Show any error or success messages */}
+      {message && <div id="payment-message">{message}</div>}
     </form>
   );
-};
-
-export default CheckoutForm;
+}

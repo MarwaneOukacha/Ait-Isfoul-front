@@ -69,8 +69,8 @@ export default function Reservation() {
   };
 
   return (
-    <div className="flex justify-center items-center bg-gray-50 min-h-screen">
-      <div className="w-full max-w-4xl space-y-6 px-4 py-6 bg-white shadow-lg">
+    <div className="flex justify-center items-center 0 min-h-screen">
+      <div className="w-full max-w-4xl space-y-6 px-4 py-6 bg-white ">
         {/* Progress Tracker */}
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8">
@@ -180,33 +180,71 @@ export default function Reservation() {
           {/* Step 3: Payment */}
           {currentStep === 3 && (
             <div>
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">Payment</h2>
-              {/* Payment form with icons */}
-              <div className="mb-4 flex items-center">
-                <FaCreditCard className="mr-3 text-gray-600" />
-                <input 
-                  type="text" 
-                  className="mt-1 block w-full px-4 py-2 border rounded-md"
-                  placeholder="Credit Card Number"
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Payment</h2>
+          
+            {/* Credit Card Number */}
+            <div className="mb-4 flex items-center">
+              <FaCreditCard className="mr-3 text-black" />
+              <input 
+                type="text" 
+                className="mt-1 block w-full px-4 py-2 border rounded-md"
+                placeholder="Credit Card Number"
+              />
+              <div className="ml-3 flex space-x-2">
+                <img 
+                  src="https://img.icons8.com/color/48/000000/visa.png" 
+                  alt="Visa" 
+                  className="h-6 w-auto"
                 />
-              </div>
-              <div className="mb-4 flex items-center">
-                <FaCalendarAlt className="mr-3 text-gray-600" />
-                <input 
-                  type="text" 
-                  className="mt-1 block w-full px-4 py-2 border rounded-md"
-                  placeholder="Expiration Date (MM/YY)"
-                />
-              </div>
-              <div className="mb-4 flex items-center">
-                <FaCreditCard className="mr-3 text-gray-600" />
-                <input 
-                  type="text" 
-                  className="mt-1 block w-full px-4 py-2 border rounded-md"
-                  placeholder="CVV"
+                <img 
+                  src="https://img.icons8.com/color/48/000000/mastercard-logo.png" 
+                  alt="MasterCard" 
+                  className="h-6 w-auto"
                 />
               </div>
             </div>
+          
+            {/* Expiration Date */}
+            <div className="mb-4 flex items-center">
+              <FaCalendarAlt className="mr-3 text-black" />
+              <input 
+                type="text" 
+                className="mt-1 block w-full px-4 py-2 border rounded-md"
+                placeholder="Expiration Date (MM/YY)"
+              />
+            </div>
+          
+            {/* CVV */}
+            <div className="mb-4 flex items-center">
+              <FaCreditCard className="mr-3 text-black" />
+              <input 
+                type="text" 
+                className="mt-1 block w-full px-4 py-2 border rounded-md"
+                placeholder="CVV"
+              />
+            </div>
+          
+            {/* Country Selector */}
+            <div className="mb-4 flex items-center">
+              <span className="mr-3 text-gray-600 font-medium">🌍</span>
+              <select 
+                className="mt-1 block w-full px-4 py-2 border rounded-md"
+              >
+                <option value="">Select Country</option>
+                <option value="FR">France</option>
+                <option value="US">United States</option>
+                <option value="MA">Morocco</option>
+                <option value="DE">Germany</option>
+                <option value="UK">United Kingdom</option>
+                <option value="ES">Spain</option>
+                <option value="IT">Italy</option>
+                <option value="CA">Canada</option>
+                <option value="AU">Australia</option>
+              </select>
+            </div>
+          </div>
+          
+          
           )}
 
           {/* Step 4: Confirmation */}

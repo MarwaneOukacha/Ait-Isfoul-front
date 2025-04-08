@@ -10,6 +10,8 @@ import {
   FaChevronDown,
   FaChevronUp,
   FaDownload,
+  FaTimes,
+  FaPen,
 } from "react-icons/fa";
 
 const reservations = [
@@ -134,8 +136,10 @@ export default function ReservationList() {
                   <p><strong>Special Requests:</strong> Early check-in, sea view</p>
                   <div className="flex gap-4 mt-4">
                     <button className="text-red-500 hover:text-red-700 transition">
-                      <FaTrash size={18} onClick={() => handleDeleteClick(res.id)} />
+                    <FaTimes size={18} onClick={() => handleDeleteClick(res.id)} />
+
                     </button>
+                    <FaPen size={18} className="text-green-700 hover:text-accent transition"/>
                     <FaDownload size={18} className="text-gray hover:text-accent transition"/>
                   </div>
                 </div>
