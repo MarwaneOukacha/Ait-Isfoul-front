@@ -9,16 +9,16 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
-  // Mocked auth state (replace with actual auth context or logic)
-  const [user, setUser] = useState(() => {
-    const token = localStorage.getItem('authToken');
-    return token ? { name: 'John Doe' } : null; // or parse a real user object if stored
-  });
-   // null if not signed in to test it use { name: 'John Doe' }
+  
 
   const navigate = useNavigate();
   const location = useLocation();
-
+// Mocked auth state (replace with actual auth context or logic)
+const [user, setUser] = useState(() => {
+  const token = localStorage.getItem('authToken');
+  return token ? { name: 'John Doe' } : null;
+});
+  // null if not signed in to test it use { name: 'John Doe' }
   useEffect(() => {
     const handleScroll = () => {
       setHeader(window.scrollY > 50);
@@ -26,7 +26,12 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
+  const logout = () => {
+    localStorage.removeItem('authToken'); // remove token
+    setUser(null);                        // update state
+    navigate('/');                        // redirect
+  };
+  
   const handleNavClick = (e, sectionId) => {
     e.preventDefault();
     setMobileMenuOpen(false);
@@ -49,7 +54,7 @@ const Header = () => {
         <div className='flex items-center gap-4'>
           <div className='lg:hidden cursor-pointer'>
             {mobileMenuOpen ? (
-              <FaTimes size={24} className={header ? 'text-primary' : 'text-white'} onClick={() => setMobileMenuOpen(false)} />
+              <FaTimes size={24} className={header ? 'text-primary' : 'text-black'} onClick={() => setMobileMenuOpen(false)} />
             ) : (
               <FaBars size={24} className={header ? 'text-primary' : 'text-black'} onClick={() => setMobileMenuOpen(true)} />
             )}
@@ -115,7 +120,7 @@ const Header = () => {
             ) : (
               <>
                 <Link to='/my-bookings'>My Bookings</Link>
-                <button onClick={() => setUser(null)} className='text-left'>Logout</button>
+                <button onClick={() => logout()} className='text-left'>Logout</button>
               </>
             )}
           </div>

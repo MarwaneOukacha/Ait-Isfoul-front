@@ -6,6 +6,7 @@ import RoomDetails from './pages/RoomDetails';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Reservation from './components/Reservation';
+import ReservationList from './components/ReservationList';
 const roomDetails = {
   hotelName: 'HÔTEL DE PARIS',
   roomType: 'Suite Présidentielle',
@@ -38,6 +39,12 @@ const router = createBrowserRouter([
         element:<Reservation roomDetails={roomDetails} />
 
       },
+      {
+        path: 'my-bookings',
+        element:<ReservationList/>
+
+      }
+      
     ],
   },
 ]);
