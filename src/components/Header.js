@@ -29,7 +29,6 @@ const Header = () => {
 
   // Logout function
   const logout = () => {
-    
     localStorage.removeItem('authToken');
     setUser(null);
     navigate('/');
@@ -52,8 +51,9 @@ const Header = () => {
     setUserDropdownOpen((prev) => !prev);
   };
 
-  // Close mobile menu after clicking on mobile nav links or buttons
-  const closeMobileMenu = () => {
+  // Close dropdown and mobile menu when a link is clicked
+  const closeDropdownAndMenu = () => {
+    setUserDropdownOpen(false);
     setMobileMenuOpen(false);
   };
 
@@ -89,8 +89,8 @@ const Header = () => {
 
           {!user ? (
             <>
-              <Link to='/login' className='px-4 py-2 transition hover:bg-accent hover:text-white' onClick={closeMobileMenu}>Sign In</Link>
-              <Link to='/register' className='px-4 py-2 transition hover:bg-accent hover:text-white' onClick={closeMobileMenu}>Sign Up</Link>
+              <Link to='/login' className='px-4 py-2 transition hover:bg-accent hover:text-white' onClick={closeDropdownAndMenu}>Sign In</Link>
+              <Link to='/register' className='px-4 py-2 transition hover:bg-accent hover:text-white' onClick={closeDropdownAndMenu}>Sign Up</Link>
             </>
           ) : (
             <div className='relative'>
@@ -101,7 +101,8 @@ const Header = () => {
               />
               {userDropdownOpen && (
                 <div className='absolute right-0 mt-2 bg-white border shadow-lg rounded-md w-[180px] text-sm z-50'>
-                  <Link to='/my-bookings' className='block px-4 py-2 hover:bg-gray-100' onClick={closeMobileMenu}>My Bookings</Link>
+                  <Link to='/my-bookings' className='block px-4 py-2 hover:bg-gray-100' onClick={closeDropdownAndMenu}>My Bookings</Link>
+                  <Link to='/settings'  className='block px-4 py-2 hover:bg-gray-100' onClick={closeDropdownAndMenu}>Settings</Link>
                   <button onClick={logout} className='w-full text-left px-4 py-2 hover:bg-gray-100'>Logout</button>
                 </div>
               )}
@@ -121,12 +122,13 @@ const Header = () => {
 
             {!user ? (
               <>
-                <Link to='/login' onClick={closeMobileMenu}>Sign In</Link>
-                <Link to='/register' onClick={closeMobileMenu}>Sign Up</Link>
+                <Link to='/login' onClick={closeDropdownAndMenu}>Sign In</Link>
+                <Link to='/register' onClick={closeDropdownAndMenu}>Sign Up</Link>
               </>
             ) : (
               <>
-                <Link to='/my-bookings' onClick={closeMobileMenu}>My Bookings</Link>
+                <Link to='/my-bookings' onClick={closeDropdownAndMenu}>My Bookings</Link>
+                <Link to='/settings' onClick={closeDropdownAndMenu}>Settings</Link>
                 <button onClick={logout} className='text-left' >Logout</button>
               </>
             )}
