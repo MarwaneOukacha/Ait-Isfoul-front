@@ -1,6 +1,7 @@
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
   return (
@@ -82,9 +83,9 @@ const SignUp = () => {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{' '}
-          <a href="/login" className="text-accent hover:underline">
+          <Link to="/login" className="text-accent hover:underline">
             Sign in
-          </a>
+          </Link>
         </p>
       </div>
     </section>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -100,9 +101,9 @@ const SignIn = () => {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Don’t have an account?{' '}
-          <a href="/signup" className="text-accent hover:underline">
+          <Link to='/register'  className="text-accent hover:underline">
             Create one
-          </a>
+          </Link>
         </p>
       </div>
     </section>

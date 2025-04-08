@@ -8,7 +8,8 @@ import {
   FaCheckCircle,
   FaDoorOpen,
   FaChevronDown,
-  FaChevronUp
+  FaChevronUp,
+  FaDownload,
 } from "react-icons/fa";
 
 const reservations = [
@@ -40,9 +41,35 @@ const reservations = [
 
 export default function ReservationList() {
   const [openReservationId, setOpenReservationId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [reservationToDelete, setReservationToDelete] = useState(null);
 
   const toggleDropdown = (id) => {
     setOpenReservationId(openReservationId === id ? null : id);
+  };
+
+  const handleDeleteClick = (id) => {
+    // Show the confirmation popup when trash icon is clicked
+    setShowModal(true);
+    setReservationToDelete(id);
+  };
+
+  const handleCancelDelete = () => {
+    // Close the modal without deleting
+    setShowModal(false);
+    setReservationToDelete(null);
+  };
+
+  const handleConfirmDelete = () => {
+    // Handle the deletion logic here, e.g., call an API to delete the reservation
+    console.log(`Reservation ${reservationToDelete} cancelled.`);
+    setShowModal(false);
+    setReservationToDelete(null);
+  };
+
+  const handleDownloadInvoice = (id) => {
+    // You can implement the logic for downloading the invoice
+    console.log(`Download invoice for reservation ${id}`);
   };
 
   return (
@@ -54,7 +81,7 @@ export default function ReservationList() {
           {reservations.map((res) => (
             <div
               key={res.id}
-              className="bg-white shadow-md p-6  border border-gray-100 transition-all hover:shadow-xl"
+              className="bg-white shadow-md p-6 border border-gray-100 transition-all hover:shadow-xl"
             >
               {/* Header row */}
               <div
@@ -79,7 +106,8 @@ export default function ReservationList() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <span className={`text-sm font-semibold uppercase px-4 py-1 tracking-wide 
+                  <span
+                    className={`text-sm font-semibold uppercase px-4 py-1 tracking-wide 
                     ${res.status === "confirmed"
                       ? "bg-green-100 text-green-700"
                       : res.status === "pending"
@@ -105,18 +133,42 @@ export default function ReservationList() {
                   <p><strong>Guests:</strong> 2 adults</p>
                   <p><strong>Special Requests:</strong> Early check-in, sea view</p>
                   <div className="flex gap-4 mt-4">
-                    {/*<button className="text-green-500 hover:text-green-700 transition">
-                      <FaCheckCircle size={18} />
-                    </button>
                     <button className="text-red-500 hover:text-red-700 transition">
-                      <FaTrash size={18} />
-                    </button>*/}
+                      <FaTrash size={18} onClick={() => handleDeleteClick(res.id)} />
+                    </button>
+                    <FaDownload size={18} className="text-gray hover:text-accent transition"/>
                   </div>
                 </div>
               )}
             </div>
           ))}
         </div>
+
+        {/* Modal */}
+        {showModal && (
+          <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+            <div className="bg-white p-6  shadow-xl w-96">
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">Cancel Reservation</h2>
+              <p className="text-gray-600">
+                Are you sure you want to cancel the reservation? Please note that you may not receive the full refund due to Stripe's cancellation policy.
+              </p>
+              <div className="mt-6 flex justify-end gap-4">
+                <button
+                  onClick={handleCancelDelete}
+                  className="px-4 py-2 text-gray-500 hover:text-gray-700"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleConfirmDelete}
+                  className="px-4 py-2 text-white bg-red-500 hover:bg-red-600"
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

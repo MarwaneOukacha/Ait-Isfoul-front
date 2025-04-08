@@ -1,6 +1,5 @@
-"use client"
-
-import { useState } from "react"
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Importing useNavigate hook
 import { 
   FaSearch, 
   FaMapMarkedAlt, 
@@ -14,12 +13,14 @@ import {
   FaEnvelope,
   FaPhone,
   FaCreditCard
-} from "react-icons/fa"
+} from "react-icons/fa";
 
 export default function Reservation() {
   const [currentStep, setCurrentStep] = useState(1);  // Initial step is "Select Room"
   const [showRoomDetails, setShowRoomDetails] = useState(false);  // Show room details on button click
   const [showCart, setShowCart] = useState(true);
+
+  const navigate = useNavigate(); // Hook to navigate to different routes
 
   const steps = [
     {
@@ -55,6 +56,9 @@ export default function Reservation() {
   const handleNextStep = () => {
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
+    } else {
+      // After the last step (step 4), navigate to '/my-bookings'
+      navigate('/my-bookings');
     }
   };
 
@@ -126,6 +130,7 @@ export default function Reservation() {
           </div>
               {/* Room details shown on click */}
               
+
               {showRoomDetails && (
                 <div className="mt-4">
                   <h3 className="font-semibold text-gray-800">Room Details:</h3>
@@ -239,6 +244,3 @@ export default function Reservation() {
     </div>
   );
 }
-
-
-{/*  */}

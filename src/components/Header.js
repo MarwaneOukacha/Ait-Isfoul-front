@@ -112,12 +112,12 @@ const Header = () => {
         {/* Mobile Nav */}
         {mobileMenuOpen && (
           <div className='absolute top-full left-0 w-full bg-white shadow-lg flex flex-col gap-4 px-6 py-4 text-primary text-sm uppercase font-medium lg:hidden z-50'>
-            <Link to='/' onClick={(e) => handleNavClick(e, 'home')} className='hover:text-accent transition' onClick={closeMobileMenu}>Home</Link>
-            <Link to='/' onClick={(e) => handleNavClick(e, 'rooms')} className='hover:text-accent transition' onClick={closeMobileMenu}>Rooms</Link>
-            <Link to='/' onClick={(e) => handleNavClick(e, 'about')} className='hover:text-accent transition' onClick={closeMobileMenu}>About Us</Link>
-            <Link to='/' onClick={(e) => handleNavClick(e, 'services')} className='hover:text-accent transition' onClick={closeMobileMenu}>Restaurant</Link>
-            <Link to='/' onClick={(e) => handleNavClick(e, 'experiences')} className='hover:text-accent transition' onClick={closeMobileMenu}>Experiences</Link>
-            <Link to='/' onClick={(e) => handleNavClick(e, 'contact')} className='hover:text-accent transition' onClick={closeMobileMenu}>Contact</Link>
+            <Link to='/' onClick={(e) => handleNavClick(e, 'home')} className='hover:text-accent transition' >Home</Link>
+            <Link to='/' onClick={(e) => handleNavClick(e, 'rooms')} className='hover:text-accent transition' >Rooms</Link>
+            <Link to='/' onClick={(e) => handleNavClick(e, 'about')} className='hover:text-accent transition' >About Us</Link>
+            <Link to='/' onClick={(e) => handleNavClick(e, 'services')} className='hover:text-accent transition' >Restaurant</Link>
+            <Link to='/' onClick={(e) => handleNavClick(e, 'experiences')} className='hover:text-accent transition'>Experiences</Link>
+            <Link to='/' onClick={(e) => handleNavClick(e, 'contact')} className='hover:text-accent transition' >Contact</Link>
 
             {!user ? (
               <>
