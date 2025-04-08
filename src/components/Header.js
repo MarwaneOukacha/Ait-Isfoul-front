@@ -9,16 +9,16 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
-  
-
   const navigate = useNavigate();
   const location = useLocation();
-// Mocked auth state (replace with actual auth context or logic)
-const [user, setUser] = useState(() => {
-  const token = localStorage.getItem('authToken');
-  return token ? { name: 'John Doe' } : null;
-});
-  // null if not signed in to test it use { name: 'John Doe' }
+
+  // Mocked auth state (replace with actual auth context or logic)
+  const [user, setUser] = useState(() => {
+    const token = localStorage.getItem('authToken');
+    return token ? { name: 'John Doe' } : null;
+  });
+
+  // Handle scroll behavior
   useEffect(() => {
     const handleScroll = () => {
       setHeader(window.scrollY > 50);
@@ -26,12 +26,16 @@ const [user, setUser] = useState(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Logout function
   const logout = () => {
-    localStorage.removeItem('authToken'); // remove token
-    setUser(null);                        // update state
-    navigate('/');                        // redirect
+    
+    localStorage.removeItem('authToken');
+    setUser(null);
+    navigate('/');
   };
-  
+
+  // Handle mobile menu close when clicking on navigation items
   const handleNavClick = (e, sectionId) => {
     e.preventDefault();
     setMobileMenuOpen(false);
@@ -43,8 +47,14 @@ const [user, setUser] = useState(() => {
     }
   };
 
+  // Toggle user dropdown for logged-in user
   const toggleUserDropdown = () => {
     setUserDropdownOpen((prev) => !prev);
+  };
+
+  // Close mobile menu after clicking on mobile nav links or buttons
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -79,8 +89,8 @@ const [user, setUser] = useState(() => {
 
           {!user ? (
             <>
-              <Link to='/login' className='px-4 py-2 transition hover:bg-accent hover:text-white'>Sign In</Link>
-              <Link to='/register' className='px-4 py-2 transition hover:bg-accent hover:text-white'>Sign Up</Link>
+              <Link to='/login' className='px-4 py-2 transition hover:bg-accent hover:text-white' onClick={closeMobileMenu}>Sign In</Link>
+              <Link to='/register' className='px-4 py-2 transition hover:bg-accent hover:text-white' onClick={closeMobileMenu}>Sign Up</Link>
             </>
           ) : (
             <div className='relative'>
@@ -91,13 +101,10 @@ const [user, setUser] = useState(() => {
               />
               {userDropdownOpen && (
                 <div className='absolute right-0 mt-2 bg-white border shadow-lg rounded-md w-[180px] text-sm z-50'>
-                  <Link to='/my-bookings' className='block px-4 py-2 hover:bg-gray-100'>My Bookings</Link>
-                  <button onClick={() => {
-                    localStorage.removeItem('authToken'); // Remove the auth token from localStorage
-                    setUser(null); // Update the user state
-                  }} className='w-full text-left px-4 py-2 hover:bg-gray-100'>Logout</button>
-                                </div>
-                              )}
+                  <Link to='/my-bookings' className='block px-4 py-2 hover:bg-gray-100' onClick={closeMobileMenu}>My Bookings</Link>
+                  <button onClick={logout} className='w-full text-left px-4 py-2 hover:bg-gray-100'>Logout</button>
+                </div>
+              )}
             </div>
           )}
         </nav>
@@ -105,22 +112,22 @@ const [user, setUser] = useState(() => {
         {/* Mobile Nav */}
         {mobileMenuOpen && (
           <div className='absolute top-full left-0 w-full bg-white shadow-lg flex flex-col gap-4 px-6 py-4 text-primary text-sm uppercase font-medium lg:hidden z-50'>
-            <Link to='/' onClick={(e) => handleNavClick(e, 'home')}>Home</Link>
-            <Link to='/' onClick={(e) => handleNavClick(e, 'rooms')}>Rooms</Link>
-            <Link to='/' onClick={(e) => handleNavClick(e, 'about')}>About Us</Link>
-            <Link to='/' onClick={(e) => handleNavClick(e, 'services')}>Restaurant</Link>
-            <Link to='/' onClick={(e) => handleNavClick(e, 'experiences')}>Experiences</Link>
-            <Link to='/' onClick={(e) => handleNavClick(e, 'contact')}>Contact</Link>
+            <Link to='/' onClick={(e) => handleNavClick(e, 'home')} className='hover:text-accent transition' onClick={closeMobileMenu}>Home</Link>
+            <Link to='/' onClick={(e) => handleNavClick(e, 'rooms')} className='hover:text-accent transition' onClick={closeMobileMenu}>Rooms</Link>
+            <Link to='/' onClick={(e) => handleNavClick(e, 'about')} className='hover:text-accent transition' onClick={closeMobileMenu}>About Us</Link>
+            <Link to='/' onClick={(e) => handleNavClick(e, 'services')} className='hover:text-accent transition' onClick={closeMobileMenu}>Restaurant</Link>
+            <Link to='/' onClick={(e) => handleNavClick(e, 'experiences')} className='hover:text-accent transition' onClick={closeMobileMenu}>Experiences</Link>
+            <Link to='/' onClick={(e) => handleNavClick(e, 'contact')} className='hover:text-accent transition' onClick={closeMobileMenu}>Contact</Link>
 
             {!user ? (
               <>
-                <Link to='/login'>Sign In</Link>
-                <Link to='/register'>Sign Up</Link>
+                <Link to='/login' onClick={closeMobileMenu}>Sign In</Link>
+                <Link to='/register' onClick={closeMobileMenu}>Sign Up</Link>
               </>
             ) : (
               <>
-                <Link to='/my-bookings'>My Bookings</Link>
-                <button onClick={() => logout()} className='text-left'>Logout</button>
+                <Link to='/my-bookings' onClick={closeMobileMenu}>My Bookings</Link>
+                <button onClick={logout} className='text-left' >Logout</button>
               </>
             )}
           </div>
@@ -129,4 +136,5 @@ const [user, setUser] = useState(() => {
     </header>
   );
 };
+
 export default Header;
