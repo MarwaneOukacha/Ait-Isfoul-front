@@ -18,7 +18,7 @@ const SettingsPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 sm:py-16 lg:py-24 px-6">
-      <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg ">
+      <div className="max-w-4xl mx-auto bg-white p-8  ">
         {/* Settings Tabs */}
         <div className="flex items-center justify-center space-x-8 text-lg font-semibold text-gray-700 border-b">
           <button 
@@ -45,7 +45,7 @@ const SettingsPage = () => {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                className="mt-2 p-3  border-gray-300  focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
 
@@ -56,7 +56,7 @@ const SettingsPage = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                className="mt-2 p-3 border border-gray-300  focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
@@ -71,7 +71,7 @@ const SettingsPage = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                className="mt-2 p-3 border border-gray-300  focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
 
@@ -82,7 +82,7 @@ const SettingsPage = () => {
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                className="mt-2 p-3 border border-gray-300  focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
@@ -92,7 +92,7 @@ const SettingsPage = () => {
         <div className="mt-8">
           <button
             onClick={handleSaveSettings}
-            className="w-full py-3 bg-primary text-white font-medium text-lg rounded-md hover:bg-primary-dark transition duration-300"
+            className="w-full py-3 bg-primary text-white font-medium text-lg  hover:bg-primary-dark transition duration-300"
           >
             Save Changes
           </button>
