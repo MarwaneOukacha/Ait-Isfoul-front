@@ -105,12 +105,12 @@ export default function ReservationList() {
                   <p><strong>Guests:</strong> 2 adults</p>
                   <p><strong>Special Requests:</strong> Early check-in, sea view</p>
                   <div className="flex gap-4 mt-4">
-                    <button className="text-green-500 hover:text-green-700 transition">
+                    {/*<button className="text-green-500 hover:text-green-700 transition">
                       <FaCheckCircle size={18} />
                     </button>
                     <button className="text-red-500 hover:text-red-700 transition">
                       <FaTrash size={18} />
-                    </button>
+                    </button>*/}
                   </div>
                 </div>
               )}
