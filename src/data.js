@@ -18,6 +18,7 @@ import Room8ImgLg from './assets/img/rooms/8-lg.png';
 import RommeH01 from './assets/img/rooms/room01.jpg'
 import RommeH02 from './assets/img/rooms/room02.jpg'
 import RommeH03 from './assets/img/rooms/room03.jpg'
+import RommeH04 from './assets/img/rooms/room4.jpg'
 // import icons
 import {
   FaWifi,
@@ -112,8 +113,8 @@ export const roomData = [
     size: 50,
     maxPerson: 4,
     price: 289,
-    image: Room4Img,
-    imageLg: Room4ImgLg,
+    image: RommeH04,
+    imageLg: RommeH04,
   },
   {
     id: 5,
@@ -133,8 +134,8 @@ export const roomData = [
     size: 90,
     maxPerson: 5,
     price: 320,
-    image: Room5Img,
-    imageLg: Room5ImgLg,
+    image: RommeH04,
+    imageLg: RommeH04,
   },
   {
     id: 6,
@@ -154,8 +155,8 @@ export const roomData = [
     size: 45,
     maxPerson: 6,
     price: 344,
-    image: Room6Img,
-    imageLg: Room6ImgLg,
+    image: RommeH04,
+    imageLg: RommeH04,
   },
   {
     id: 7,
@@ -175,8 +176,8 @@ export const roomData = [
     size: 84,
     maxPerson: 7,
     price: 389,
-    image: Room7Img,
-    imageLg: Room7ImgLg,
+    image: RommeH02,
+    imageLg: RommeH02,
   },
   {
     id: 8,
@@ -196,7 +197,7 @@ export const roomData = [
     size: 48,
     maxPerson: 8,
     price: 499,
-    image: Room8Img,
-    imageLg: Room8ImgLg,
+    image: RommeH02,
+    imageLg: RommeH02,
   },
 ];
