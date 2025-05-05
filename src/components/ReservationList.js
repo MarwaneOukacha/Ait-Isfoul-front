@@ -1,177 +1,215 @@
-"use client";
-
 import { useState } from "react";
-import {
-  FaTicketAlt,
-  FaCalendarAlt,
-  FaTrash,
-  FaCheckCircle,
-  FaDoorOpen,
-  FaChevronDown,
-  FaChevronUp,
-  FaDownload,
-  FaTimes,
-  FaPen,
-} from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaDownload, FaFileAlt } from "react-icons/fa"; // Importing React Icons
 
-const reservations = [
+// Sample data for room bookings
+const roomBookings = [
   {
-    id: 1,
-    guestName: "John Doe",
-    checkIn: "2025-05-20",
-    checkOut: "2025-05-25",
-    roomType: "Deluxe King",
-    status: "confirmed",
+    id: "#102345",
+    room: "Deluxe Suite",
+    amount: "1200DH",
+    date: "2025/05/02",
+    status: "Confirmed",
+    customer: "John Doe",
+    email: "johndoe@example.com",
+    checkIn: "2025/05/02",
+    checkOut: "2025/05/10",
   },
   {
-    id: 2,
-    guestName: "Jane Smith",
-    checkIn: "2025-06-10",
-    checkOut: "2025-06-15",
-    roomType: "Ocean View Suite",
-    status: "pending",
+    id: "#102346",
+    room: "Standard Room",
+    amount: "800DH",
+    date: "2025/05/10",
+    status: "Pending",
+    customer: "Jane Smith",
+    email: "janesmith@example.com",
+    checkIn: "2025/05/10",
+    checkOut: "2025/05/12",
   },
   {
-    id: 3,
-    guestName: "Alex Johnson",
-    checkIn: "2025-07-01",
-    checkOut: "2025-07-04",
-    roomType: "Standard Room",
-    status: "cancelled",
+    id: "#102347",
+    room: "Executive Room",
+    amount: "1500DH",
+    date: "2025/05/15",
+    status: "Confirmed",
+    customer: "Alice Johnson",
+    email: "alicej@example.com",
+    checkIn: "2025/05/15",
+    checkOut: "2025/05/20",
+  },
+  {
+    id: "#102348",
+    room: "Presidential Suite",
+    amount: "3000DH",
+    date: "2025/05/20",
+    status: "Confirmed",
+    customer: "Michael Brown",
+    email: "michaelb@example.com",
+    checkIn: "2025/05/20",
+    checkOut: "2025/05/30",
   },
 ];
 
 export default function ReservationList() {
-  const [openReservationId, setOpenReservationId] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [reservationToDelete, setReservationToDelete] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
+  const totalPages = Math.ceil(roomBookings.length / itemsPerPage);
+  const [expandedBooking, setExpandedBooking] = useState(null); // State to manage expanded booking
 
-  const toggleDropdown = (id) => {
-    setOpenReservationId(openReservationId === id ? null : id);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentBookings = roomBookings.slice(startIndex, startIndex + itemsPerPage);
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
-  const handleDeleteClick = (id) => {
-    // Show the confirmation popup when trash icon is clicked
-    setShowModal(true);
-    setReservationToDelete(id);
-  };
-
-  const handleCancelDelete = () => {
-    // Close the modal without deleting
-    setShowModal(false);
-    setReservationToDelete(null);
-  };
-
-  const handleConfirmDelete = () => {
-    // Handle the deletion logic here, e.g., call an API to delete the reservation
-    console.log(`Reservation ${reservationToDelete} cancelled.`);
-    setShowModal(false);
-    setReservationToDelete(null);
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   const handleDownloadInvoice = (id) => {
-    // You can implement the logic for downloading the invoice
-    console.log(`Download invoice for reservation ${id}`);
+    // Add your logic here to download the invoice
+    console.log(`Downloading invoice for booking ${id}`);
   };
 
   return (
-    <div className="flex justify-center items-start min-h-screen bg-gray-50 pt-24 px-6">
-      <div className="w-full max-w-7xl">
-        <h2 className="text-4xl font-bold text-gray-800 mb-10">Reservation List</h2>
+    <div className="container mx-auto px-6 py-10">
+      {/* Heading Section */}
+      <div className="mt-16 mb-16">
+        <h1 className="text-xl font-semibold text-gray-900 text-left mt-4 mb-6">My Room Bookings</h1>
+        <div className="mt-2 h-1 w-16 bg-accent mx-0"></div>
+      </div>
 
-        <div className="space-y-8">
-          {reservations.map((res) => (
-            <div
-              key={res.id}
-              className="bg-white shadow-md p-6 border border-gray-100 transition-all hover:shadow-xl"
-            >
-              {/* Header row */}
-              <div
-                className="flex justify-between items-center cursor-pointer"
-                onClick={() => toggleDropdown(res.id)}
-              >
-                <div className="flex-1 space-y-4 sm:space-y-0 sm:flex sm:items-center sm:gap-10 text-lg">
-                  <div className="flex items-center gap-3 text-gray-800">
-                    <FaTicketAlt className="text-accent w-5 h-5" />
-                    <span className="font-semibold">{res.guestName}</span>
-                  </div>
+      {/* Room Booking Table */}
+      <div className="shadow-lg border rounded-lg">
+        <div className="p-6">
+          {/* Desktop view */}
+          <div className="hidden md:block">
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-8 py-5 text-left text-sm font-medium text-gray-500">Room</th>
+                  <th className="px-8 py-5 text-left text-sm font-medium text-gray-500">Booking ID</th>
+                  <th className="px-8 py-5 text-left text-sm font-medium text-gray-500">Amount</th>
+                  <th className="px-8 py-5 text-left text-sm font-medium text-gray-500">Date</th>
+                  <th className="px-8 py-5 text-left text-sm font-medium text-gray-500">Status</th>
+                  <th className="px-8 py-5 text-right text-sm font-medium text-gray-500">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {currentBookings.map((booking) => (
+                  <tr key={booking.id} className="hover:bg-gray-50">
+                    <td className="px-8 py-5 text-sm font-medium text-gray-900">{booking.room}</td>
+                    <td className="px-8 py-5 text-sm text-gray-500">{booking.id}</td>
+                    <td className="px-8 py-5 text-sm text-gray-500">{booking.amount}</td>
+                    <td className="px-8 py-5 text-sm text-gray-500">{booking.date}</td>
+                    <td className="px-8 py-5 text-sm">
+                      <span
+                        className={`inline-block px-4 py-2 text-xs font-semibold leading-tight ${
+                          booking.status === "Confirmed"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-yellow-100 text-yellow-800"
+                        }`}
+                      >
+                        {booking.status}
+                      </span>
+                    </td>
+                    <td className="px-8 py-5 text-right">
+                      <button
+                        className="text-gray-500 hover:text-gray-700 mr-4"
+                        onClick={() => handleDownloadInvoice(booking.id)}
+                      >
+                        <FaFileAlt className="h-5 w-5" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <FaCalendarAlt />
-                    <span>{res.checkIn} → {res.checkOut}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <FaDoorOpen />
-                    <span>{res.roomType}</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
+          {/* Mobile view */}
+          <div className="md:hidden">
+            {currentBookings.map((booking) => (
+              <div key={booking.id} className="border-b border-gray-200 p-6">
+                <div className="flex justify-between mb-4">
+                  <span className="font-medium">{booking.room}</span>
                   <span
-                    className={`text-sm font-semibold uppercase px-4 py-1 tracking-wide 
-                    ${res.status === "confirmed"
-                      ? "bg-green-100 text-green-700"
-                      : res.status === "pending"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-red-100 text-red-700"
+                    className={`inline-block px-4 py-2 text-xs font-semibold leading-tight ${
+                      booking.status === "Confirmed"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-yellow-100 text-yellow-800"
                     }`}
                   >
-                    {res.status}
+                    {booking.status}
                   </span>
-
-                  {openReservationId === res.id ? (
-                    <FaChevronUp className="text-gray-500" />
-                  ) : (
-                    <FaChevronDown className="text-gray-500" />
-                  )}
                 </div>
-              </div>
-
-              {/* Dropdown content */}
-              {openReservationId === res.id && (
-                <div className="mt-6 text-gray-600 text-sm space-y-2">
-                  <p><strong>Email:</strong> john@example.com</p>
-                  <p><strong>Guests:</strong> 2 adults</p>
-                  <p><strong>Special Requests:</strong> Early check-in, sea view</p>
-                  <div className="flex gap-4 mt-4">
-                    <button className="text-red-500 hover:text-red-700 transition">
-                      <FaTimes size={18} onClick={() => handleDeleteClick(res.id)} />
-                    </button>
-                    <FaPen size={18} className="text-green-700 hover:text-accent transition"/>
-                    <FaDownload size={18} className="text-gray hover:text-accent transition"/>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="text-gray-500">Booking ID:</span>
+                    <span className="ml-2">{booking.id}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Amount:</span>
+                    <span className="ml-2">{booking.amount}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Date:</span>
+                    <span className="ml-2">{booking.date}</span>
                   </div>
                 </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Modal */}
-        {showModal && (
-          <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-            <div className="bg-white p-6  shadow-xl w-96">
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">Cancel Reservation</h2>
-              <p className="text-gray-600">
-                Are you sure you want to cancel the reservation? Please note that you may not receive the full refund due to Stripe's cancellation policy.
-              </p>
-              <div className="mt-6 flex justify-end gap-4">
                 <button
-                  onClick={handleCancelDelete}
-                  className="px-4 py-2 text-gray-500 hover:text-gray-700"
+                  className="mt-4 text-blue-500"
+                  onClick={() => setExpandedBooking(expandedBooking === booking.id ? null : booking.id)}
                 >
-                  Cancel
+                  {expandedBooking === booking.id ? "Hide Details" : "Show Details"}
                 </button>
-                <button
-                  onClick={handleConfirmDelete}
-                  className="px-4 py-2 text-white bg-red-500 hover:bg-red-600"
-                >
-                  Confirm
-                </button>
+                {expandedBooking === booking.id && (
+                  <div className="mt-4">
+                    <p><strong>Customer:</strong> {booking.customer}</p>
+                    <p><strong>Email:</strong> {booking.email}</p>
+                    <p><strong>Check-in:</strong> {booking.checkIn}</p>
+                    <p><strong>Check-out:</strong> {booking.checkOut}</p>
+                  </div>
+                )}
               </div>
-            </div>
+            ))}
           </div>
-        )}
+
+          {/* Pagination */}
+          <div className="flex items-center justify-center py-6 space-x-4">
+            <button
+              className="h-10 w-10 rounded-full border border-gray-300 p-3 text-gray-600 hover:bg-gray-200"
+              onClick={goToPreviousPage}
+              disabled={currentPage === 1}
+            >
+              <FaChevronLeft className="h-5 w-5" />
+            </button>
+
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <button
+                key={index}
+                className={`h-10 w-10 rounded-full border border-gray-300 p-3 ${
+                  currentPage === index + 1 ? "bg-accent text-white" : "bg-white text-gray-600"
+                }`}
+                onClick={() => setCurrentPage(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+
+            <button
+              className="h-10 w-10 rounded-full border border-gray-300 p-3 text-gray-600 hover:bg-gray-200"
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages}
+            >
+              <FaChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
