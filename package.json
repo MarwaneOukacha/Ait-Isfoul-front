@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@stripe/react-stripe-js": "^3.6.0",
-    "@stripe/stripe-js": "^7.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/react": "^19.1.2",
+    "assert": "^2.1.0",
+    "axios": "^1.9.0",
+    "buffer": "^6.0.3",
+    "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.56.2",
@@ -16,14 +18,16 @@
     "react-redux": "^9.2.0",
     "react-responsive-carousel": "^3.2.23",
     "react-scripts": "5.0.1",
+    "stream-browserify": "^3.0.0",
+    "url": "^0.11.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+  "start": "react-app-rewired start",
+  "build": "react-app-rewired build",
+  "test": "react-app-rewired test",
+  "eject": "react-scripts eject"
+},
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -46,10 +50,12 @@
     "@headlessui/react": "^1.7.5",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.20",
+    "react-app-rewired": "^2.2.1",
     "react-datepicker": "^4.8.0",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.5.0",
     "swiper": "^8.4.5",
     "tailwindcss": "^3.2.4"
   }
+
 }

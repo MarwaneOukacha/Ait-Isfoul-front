@@ -1,7 +1,5 @@
 import React from "react";
 import pic1 from '../assets/img/rooms/pic01.jpg';
-import About03 from '../assets/img/rooms/spic.jpg';
-import About04 from '../assets/img/rooms/restaurant.jpg';
 
 
 
