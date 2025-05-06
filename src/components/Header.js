@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { FaBars, FaTimes, FaUserCircle } from 'react-icons/fa';
-import LogoWhite from '../assets/img/logo-white.svg';
-import LogoDark from '../assets/img/logo-dark.svg';
+import LogoWhite from '../assets/img/white.svg';
+import LogoDark from '../assets/img/white.svg';
 
 const Header = () => {
   const [header, setHeader] = useState(false);
