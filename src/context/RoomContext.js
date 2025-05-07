@@ -17,7 +17,7 @@ const RoomProvider = ({children}) => {
   useEffect(()=>{
    /*const fetchData = async () => {
     try {
-      const data = await searchRooms({ hotelRef: '450944906235' });
+      const data = await searchRooms({ hotelRef: '450944384317' });
       console.log(data.content)
       //setRooms(data.content || []); // depends on your API structure
     } catch (error) {
@@ -35,7 +35,7 @@ const RoomProvider = ({children}) => {
       return total<=room.maxPerson
     });
     setTimeout(()=>{
-      setRooms(newRooms);//I need to fix it for the api case 
+      setRooms(newRooms); //I need to fix it for the api case 
       setLoading(false)
     },3000)
     

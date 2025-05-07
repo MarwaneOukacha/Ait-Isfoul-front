@@ -1,4 +1,4 @@
-// services/roomService.js
+import axiosInstance from '../services/axiosInstance'; 
 import axios from 'axios';
 
 export const searchRooms = async ({
@@ -28,6 +28,7 @@ export const searchRooms = async ({
   params.append('size', size);
   params.append('sort', sort);
 
-  const response = await axios.get(`http://localhost:8088/rooms/search/hotel?${params.toString()}`);
-  return response.data; // Expected to be paginated result
+  const response = await axiosInstance.get(`/rooms/search/hotel?${params.toString()}`);
+
+  return response.data; 
 };

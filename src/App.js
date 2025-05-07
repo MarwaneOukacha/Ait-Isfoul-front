@@ -8,6 +8,9 @@ import SignIn from './pages/SignIn';
 import Reservation from './components/Reservation';
 import ReservationList from './components/ReservationList';
 import SettingsPage from './pages/SettingsPage';
+import { Toaster } from 'sonner';
+
+
 const roomDetails = {
   hotelName: 'HÔTEL DE PARIS',
   roomType: 'Suite Présidentielle',
@@ -56,7 +59,13 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <Toaster position="top-right" />
+    </>
+  
+)
 };
 
 export default App;

@@ -2,24 +2,38 @@ import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { login } from '../services/auth';
+import { toast } from 'sonner';
+
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
 
-  const handleSignIn = (e) => {
+  const handleSignIn =async  (e) => {
     e.preventDefault();
+    /*try {
+      const user = await login({ email: 'marwaneoukacha2001@gmail.com', password: 'PB267544' });
+      
+      console.log('Logged in:', user);
+    } catch (e) {
+      console.error(e.message);
+    }*/
+    
     setLoading(true);
 
     // Simulate an async sign-in (e.g., fetch or Firebase)
     setTimeout(() => {
       localStorage.setItem('authToken', 'mock-token-123'); // Store token or user object
+      toast('Logged in')
       setLoading(false);
       window.location.href = '/'; // or use `navigate('/')` if using `react-router`
     }, 2000);
+   
   };
 
   return (
-    <section className="py-20 min-h-screen flex items-center justify-center">
+    
+    <section className="py-20 min-h-screen flex items-center justify-center">      
       <div className="w-full max-w-lg bg-white p-10 rounded-xl shadow-xl">
         <h2 className="text-3xl font-semibold text-center mb-6">Welcome Back</h2>
 
