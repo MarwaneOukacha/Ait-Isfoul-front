@@ -19,8 +19,8 @@ const Rooms = () => {
         <h2 className='font-primary text-[45px] mb-4'>Room & Suites</h2>
       </div>
         <div className='grid grid-cols-1 max-w-sm mx-auto gap-[30px] lg:grid-cols-3 lg:max-w-none lg:mx-0'>
-          {rooms.map((room)=>{
-            return <Room room={room} key={room.id}/>
+          {rooms.map((room,indexe)=>{
+            return <Room room={room} key={indexe}/>
           })}
           <div className='bg-white shadow-lg p-6 rounded-lg flex justify-center items-center'>
       <Link

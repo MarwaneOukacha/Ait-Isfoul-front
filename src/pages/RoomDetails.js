@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AdultsDropdown from '../components/AdultsDropdown';
 import KidsDropdown from '../components/KidsDropdown';
 import CheckIn from '../components/CheckIn';
@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
+import { getRoomDetails } from '../services/roomService';
 
 const RoomDetails = () => {
   const { rooms } = useContext(RoomContext);
@@ -30,6 +31,20 @@ const RoomDetails = () => {
     imageLg,
     imageLg
   ];
+
+  useEffect(()=>{
+    const fetchData = async () => {
+    try {
+      const data = await getRoomDetails({ id: 'ebffbaf1-eec6-4b50-9aec-65c4c33999c1' });
+      console.log(data.data)
+      //setRooms(data.content || []); // depends on your API structure
+    } catch (error) {
+      console.error('Error fetching rooms:', error);
+    }
+  };
+
+  fetchData();
+  },[])
 
   return (
     <section>

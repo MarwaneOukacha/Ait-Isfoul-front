@@ -32,3 +32,12 @@ export const searchRooms = async ({
 
   return response.data; 
 };
+
+export const getRoomDetails=async ({id})=>{
+  if(!id){
+    throw new Error('Id is required');
+  }
+
+  const response=await axiosInstance.get(`/rooms/room/${id}`)
+  return response;
+}

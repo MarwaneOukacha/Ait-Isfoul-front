@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axiosInstance from '../services/axiosInstance';
+
 import CryptoJS from 'crypto-js';
 
 const API_BASE = 'http://localhost:8088'; // your API base URL
@@ -41,7 +42,7 @@ const clearTokens = () => {
 
 export const login = async ({ email, password }) => {
   try {
-    const response = await axios.post(`${API_BASE}/login`, { email, password });
+    const response = await axiosInstance.post(`${API_BASE}/login`, { email, password });
     const { access_token, refresh_token } = response.data;
     saveToken(access_token, refresh_token);
     return response.data;
@@ -55,7 +56,7 @@ export const refreshToken = async () => {
   if (!token) throw new Error('No refresh token found');
 
   try {
-    const response = await axios.post(`${API_BASE}/refresh-token?refreshToken=${token}`);
+    const response = await axiosInstance.post(`${API_BASE}/refresh-token?refreshToken=${token}`);
     const { access_token, refresh_token } = response.data;
     saveToken(access_token, refresh_token);
     return access_token;
