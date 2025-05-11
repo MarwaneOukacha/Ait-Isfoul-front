@@ -15,14 +15,19 @@ const SignIn = () => {
     try {
       setLoading(true);
       const user = await login({ email, password });
-      toast('Logged in');
       window.location.href = '/';
       console.log('Logged in:', user);
     } catch (e) {
       console.error(e.message);
-      toast.error('Login failed. Please check your credentials.');
+      toast.error('Login failed. Please check your credentials.',{
+  style: {
+    background: '#dc2626', 
+    color: 'white',
+  },
+});
     } finally {
       setLoading(false);
+      
     }
   };
 

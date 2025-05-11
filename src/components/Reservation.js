@@ -20,7 +20,7 @@ import { useLocation } from "react-router-dom";
 
 export default function Reservation() {
   const location = useLocation();
-  const { room, checkIn, checkOut } = location.state || {};
+  const { room, checkIn, checkOut,total } = location.state || {};
  console.log(room, checkIn, checkOut);
 
 
@@ -42,7 +42,6 @@ export default function Reservation() {
                   height={200}
                 />
                 <h2 className="text-xl font-bold mt-4">{room?.title}</h2>
-                <p className="text-gray-600">Available from {new Date(checkIn).toLocaleString()}</p>
                 <p className="text-gray-600">{room?.facilitiesDesc}</p>
               </div>
 
@@ -52,8 +51,12 @@ export default function Reservation() {
                   <span>{room?.price} USD</span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="font-medium">Guests:</span>
+                  <span className="font-medium">Capacity room:</span>
                   <span>{room?.maxPeople}</span>
+                </div>
+                <div className="flex justify-between py-2">
+                  <span className="font-medium">Guests:</span>
+                  <span>{total}</span>
                 </div>
                 <div className="flex justify-between py-2">
                   <span className="font-medium">Number of nights:</span>

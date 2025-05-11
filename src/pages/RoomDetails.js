@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { getRoomDetails, checkRoomAvailability } from '../services/roomService';
+import { toast } from 'sonner';
 
 const RoomDetails = () => {
   const { id } = useParams();
@@ -18,7 +19,7 @@ const RoomDetails = () => {
 
   const [checkIn, setCheckIn] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
-
+  const { total,setTotal } = useContext(RoomContext);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,44 +47,60 @@ const RoomDetails = () => {
   const { title, description, facilitiesDesc, price } = room;
   const imageNames = room.images.map((image) => image.name);
 
-  const handleBookNow = async () => {
-    if (!checkIn || !checkOut) {
-      alert("Please select both check-in and check-out dates.");
-      return;
+// Add this import at the top
+
+const handleBookNow = async () => {
+  if (!checkIn || !checkOut) {
+    toast.warning(`Please select both check-in and check-out dates.`,{
+    style: {
+      background: '#f59e0b', // amber
+      color: 'white'
+    }});
+    return;
+  }
+   if (total > room.maxPeople) {
+    console.error('Error maxPeoaple');
+    toast.warning(`This room can not take more than ${room.maxPeople} person.`,{
+    style: {
+      background: '#f59e0b', // amber
+      color: 'white'
+    }});
+    return;
+  }
+  // Format date as YYYY-MM-DD
+  const formatDateTime = (date) => {
+    const pad = (n) => n.toString().padStart(2, '0');
+    const yyyy = date.getFullYear();
+    const MM = pad(date.getMonth() + 1);
+    const dd = pad(date.getDate());
+    return `${yyyy}-${MM}-${dd}`;
+  };
+
+  try {
+    const response = await checkRoomAvailability({
+      roomId: id,
+      checkIn: formatDateTime(checkIn),
+      checkOut: formatDateTime(checkOut),
+    });
+
+    if (response.data === true) {
+      navigate('/Book', {
+        state: {
+          room,
+          checkIn,
+          checkOut,
+          total
+        }
+      });
+    } else {
+      toast.error('Sorry, this room is not available for the selected dates.');
     }
-    // Format with hours: YYYY-MM-DDTHH:mm:ss
- const formatDateTime = (date) => {
-  const pad = (n) => n.toString().padStart(2, '0');
-  const yyyy = date.getFullYear();
-  const MM = pad(date.getMonth() + 1);
-  const dd = pad(date.getDate());
-  return `${yyyy}-${MM}-${dd}`;
+  } catch (error) {
+    console.error('Error checking availability:', error);
+    toast.error('Could not check availability. Please try again.');
+  }
 };
 
-    try {
-      const response = await checkRoomAvailability({
-        roomId: id,
-        checkIn: formatDateTime(checkIn),
-        checkOut: formatDateTime(checkOut),
-      });
-
-      if (response.data==true) {
-        
-        navigate('/Book', {
-          state: {
-            room,
-            checkIn,
-            checkOut,
-          }
-        });
-      } else {
-        alert('Sorry, this room is not available for the selected dates.');
-      }
-    } catch (error) {
-      console.error('Error checking availability:', error);
-      alert('Could not check availability. Please try again.');
-    }
-  };
 
   return (
     <section>

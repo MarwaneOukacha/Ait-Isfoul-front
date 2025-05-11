@@ -5,7 +5,7 @@ import CryptoJS from 'crypto-js';
 const API_BASE = 'http://localhost:8088'; // your API base URL
 const TOKEN_KEY = 'auth_token';
 const REFRESH_KEY = 'refresh_token';
-const SECRET_KEY = 'my-secret'; // 🔒 replace with a secure key
+const SECRET_KEY = 'AERF3456sd34TG@2&è(--+à@fjffkdz,'; //replace with a secure key
 
 // Encrypt & store token
 const saveToken = (token, refreshToken) => {
