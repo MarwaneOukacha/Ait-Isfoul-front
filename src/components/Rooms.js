@@ -22,14 +22,7 @@ const Rooms = () => {
           {rooms.map((room,indexe)=>{
             return <Room room={room} key={indexe}/>
           })}
-          <div className='bg-white shadow-lg p-6 rounded-lg flex justify-center items-center'>
-      <Link
-        to={`/rooms`}
-        className='btn btn-secondary btn-sm'
-      >
-        View More
-      </Link>
-    </div>
+          
         </div>
 
     </div>

@@ -1,63 +1,102 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AdultsDropdown from '../components/AdultsDropdown';
 import KidsDropdown from '../components/KidsDropdown';
 import CheckIn from '../components/CheckIn';
 import CheckOut from '../components/CheckOut';
 import { RoomContext } from '../context/RoomContext';
-import { FaCheck } from 'react-icons/fa';
+import { FaBath, FaCheck, FaCocktail, FaCoffee, FaHotdog, FaParking, FaStopwatch, FaSwimmingPool, FaWifi } from 'react-icons/fa';
 import ScrollToTop from '../components/ScrollToTop';
 import { useNavigate, useParams } from 'react-router-dom';
-
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
-import { getRoomDetails } from '../services/roomService';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { getRoomDetails, checkRoomAvailability } from '../services/roomService';
 
 const RoomDetails = () => {
-  const { rooms } = useContext(RoomContext);
   const { id } = useParams();
   const navigate = useNavigate();
+  const [room, setRoom] = useState({ images: [] });
 
-  const room = rooms.find((room) => {
-    return room.id === Number(id);
-  });
+  const [checkIn, setCheckIn] = useState(null);
+  const [checkOut, setCheckOut] = useState(null);
 
-  const { name, description, facilities, imageLg, price } = room;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getRoomDetails({ id: id });
+        setRoom(data.data || {});
+      } catch (error) {
+        console.error('Error fetching room:', error);
+      }
+    };
 
-  const images = [
-    imageLg,
-    imageLg,
-    imageLg,
-    imageLg,
-    imageLg,
-    imageLg
+    fetchData();
+  }, [id]);
+
+  const facilities = [
+    { name: 'Wifi', icon: <FaWifi /> },
+    { name: 'Coffee', icon: <FaCoffee /> },
+    { name: 'Bath', icon: <FaBath /> },
+    { name: 'Parking Space', icon: <FaParking /> },
+    { name: 'Swimming Pool', icon: <FaSwimmingPool /> },
+    { name: 'Breakfast', icon: <FaHotdog /> },
+    { name: 'GYM', icon: <FaStopwatch /> },
+    { name: 'Drinks', icon: <FaCocktail /> },
   ];
 
-  useEffect(()=>{
-    const fetchData = async () => {
+  const { title, description, facilitiesDesc, price } = room;
+  const imageNames = room.images.map((image) => image.name);
+
+  const handleBookNow = async () => {
+    if (!checkIn || !checkOut) {
+      alert("Please select both check-in and check-out dates.");
+      return;
+    }
+    // Format with hours: YYYY-MM-DDTHH:mm:ss
+ const formatDateTime = (date) => {
+  const pad = (n) => n.toString().padStart(2, '0');
+  const yyyy = date.getFullYear();
+  const MM = pad(date.getMonth() + 1);
+  const dd = pad(date.getDate());
+  return `${yyyy}-${MM}-${dd}`;
+};
+
     try {
-      const data = await getRoomDetails({ id: 'ebffbaf1-eec6-4b50-9aec-65c4c33999c1' });
-      console.log(data.data)
-      //setRooms(data.content || []); // depends on your API structure
+      const response = await checkRoomAvailability({
+        roomId: id,
+        checkIn: formatDateTime(checkIn),
+        checkOut: formatDateTime(checkOut),
+      });
+
+      if (response.data==true) {
+        
+        navigate('/Book', {
+          state: {
+            room,
+            checkIn,
+            checkOut,
+          }
+        });
+      } else {
+        alert('Sorry, this room is not available for the selected dates.');
+      }
     } catch (error) {
-      console.error('Error fetching rooms:', error);
+      console.error('Error checking availability:', error);
+      alert('Could not check availability. Please try again.');
     }
   };
-
-  fetchData();
-  },[])
 
   return (
     <section>
       <div className='bg-chambre bg-cover bg-center h-[560px] relative flex justify-center items-center'>
         <div className='absolute w-full h-full'></div>
-        <h1 className='text-6xl text-white z-20 font-primary text-center'>{name} Details</h1>
+        <h1 className='text-6xl text-white z-20 font-primary text-center'>{title} Details</h1>
       </div>
 
       <div className='container mx-auto'>
         <div className='flex flex-col lg:flex-row h-full py-24'>
           {/* Left side */}
           <div className='w-full h-full lg:w-[60%] px-6'>
-            <h2 className='h2'>{name}</h2>
+            <h2 className='h2'>{title}</h2>
             <p className='mb-8'>{description}</p>
 
             {/* Carousel */}
@@ -71,9 +110,13 @@ const RoomDetails = () => {
                 dynamicHeight={false}
                 className=" shadow-lg"
               >
-                {images.map((img, index) => (
+                {imageNames.map((img, index) => (
                   <div key={index}>
-                    <img src={img} alt={`Room Image ${index}`} className=" max-h-[500px] object-cover w-full" />
+                    <img
+                      src={`/img/rooms/${img}.jpg`}
+                      alt={`Room Image ${index + 1}`}
+                      className="max-h-[500px] object-cover w-full"
+                    />
                   </div>
                 ))}
               </Carousel>
@@ -82,17 +125,14 @@ const RoomDetails = () => {
             {/* Facilities */}
             <div className='mt-12'>
               <h3 className='h3 mb-3'>Room facilities</h3>
-              <p className='mb-12'>{description}</p>
+              <p className='mb-12'>{facilitiesDesc}</p>
               <div className='grid grid-cols-2 gap-6 mb-12'>
-                {facilities.map((item, index) => {
-                  const { name, icon } = item;
-                  return (
-                    <div className='flex items-center gap-x-3 flex-1' key={index}>
-                      <div className='text-3xl text-accent'>{icon}</div>
-                      <div className='text-3xl text-base'>{name}</div>
-                    </div>
-                  );
-                })}
+                {facilities.map((item, index) => (
+                  <div className='flex items-center gap-x-3 flex-1' key={index}>
+                    <div className='text-3xl text-accent'>{item.icon}</div>
+                    <div className='text-3xl text-base'>{item.name}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -103,10 +143,10 @@ const RoomDetails = () => {
               <div className='flex flex-col space-y-4 mb-4'>
                 <h3>Your Reservation</h3>
                 <div className='h-[60px]'>
-                  <CheckIn />
+                  <CheckIn checkIn={checkIn} setCheckIn={setCheckIn} />
                 </div>
                 <div className='h-[60px]'>
-                  <CheckOut />
+                  <CheckOut checkOut={checkOut} setCheckOut={setCheckOut} />
                 </div>
                 <div className='h-[60px]'>
                   <AdultsDropdown />
@@ -117,7 +157,7 @@ const RoomDetails = () => {
               </div>
               <button
                 className='btn btn-lg btn-primary w-full'
-                onClick={() => navigate('/Book')}
+                onClick={handleBookNow}
               >
                 Book now for ${price}
               </button>
@@ -125,7 +165,9 @@ const RoomDetails = () => {
 
             <div>
               <h3 className='h3'>Hotel rules</h3>
-              <p className='mb-6'>{description}</p>
+              <p className='mb-6'>
+                We are committed to providing all guests with a comfortable, safe, and enjoyable stay. Kindly review the following rules which help maintain the quality and tranquility of our accommodations:
+              </p>
               <ul className='flex flex-col gap-y-4'>
                 <li className='flex items-center gap-x-4'>
                   <FaCheck className='text-accent' />

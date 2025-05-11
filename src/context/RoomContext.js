@@ -8,26 +8,26 @@ export const RoomContext=createContext();
 const RoomProvider = ({children}) => {
   
   
-  const [rooms,setRooms]=useState(roomData);
+  const [rooms,setRooms]=useState([]);
   const [adults,setAdults]=useState('1 Adult');
   const [kids,setKids]=useState('0 Kids');
   const [total,setTotal]=useState(0);
   const [loading,setLoading]=useState(false);
 
   useEffect(()=>{
-   /*const fetchData = async () => {
+   const fetchData = async () => {
     try {
       const data = await searchRooms({ hotelRef: '450944384317' });
       console.log(data.content)
-      //setRooms(data.content || []); // depends on your API structure
+      setRooms(data.content || []); // depends on your API structure
     } catch (error) {
       console.error('Error fetching rooms:', error);
     }
   };
 
-  fetchData();*/
+  fetchData();
     setTotal(Number(adults[0])+Number(kids[0]));
-  })
+  },[])
   const handleClick=(e)=>{
     e.preventDefault();
     setLoading(true);

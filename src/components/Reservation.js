@@ -5,11 +5,26 @@ import visa from '../assets/img/visaa.png'
 import american from '../assets/img/americann.png'
 
 import paypal from '../assets/img/paypl.png'
+import { useLocation } from "react-router-dom";
 
 
+ function calculateNumberOfNights(checkInStr, checkOutStr) {
+  const checkInDate = new Date(checkInStr);
+  const checkOutDate = new Date(checkOutStr);
 
+  const diffInTime = checkOutDate - checkInDate;
+  const diffInDays = Math.ceil(diffInTime / (1000 * 60 * 60 * 24));
+
+  return diffInDays > 0 ? diffInDays : 1; // Ensure at least 1 night
+}
 
 export default function Reservation() {
+  const location = useLocation();
+  const { room, checkIn, checkOut } = location.state || {};
+ console.log(room, checkIn, checkOut);
+
+
+
   return (
     <div className="min-h-screen bg-gray-50   pt-32" >
       {/* Main Content */}
@@ -20,29 +35,33 @@ export default function Reservation() {
             <div className="space-y-6">
               <div className="text-center">
                 <img
-                  src={RommeH02}
+                  src={`/img/rooms/${room?.images?.[0]?.name}.jpg`} 
                   alt="Room Image"
                   className="mx-auto rounded-md"
                   width={300}
                   height={200}
                 />
-                <h2 className="text-xl font-bold mt-4">Deluxe Room</h2>
-                <p className="text-gray-600">Available from Monday, 5th May 2025</p>
-                <p className="text-gray-600">Ocean View, 2 King Beds</p>
+                <h2 className="text-xl font-bold mt-4">{room?.title}</h2>
+                <p className="text-gray-600">Available from {new Date(checkIn).toLocaleString()}</p>
+                <p className="text-gray-600">{room?.facilitiesDesc}</p>
               </div>
 
               <div className="border-t pt-4">
                 <div className="flex justify-between py-2">
                   <span className="font-medium">Price per night:</span>
-                  <span>1000 DH</span>
+                  <span>{room?.price} USD</span>
                 </div>
                 <div className="flex justify-between py-2">
                   <span className="font-medium">Guests:</span>
-                  <span>2</span>
+                  <span>{room?.maxPeople}</span>
+                </div>
+                <div className="flex justify-between py-2">
+                  <span className="font-medium">Number of nights:</span>
+                  <span>{calculateNumberOfNights(checkIn, checkOut)}</span>
                 </div>
                 <div className="flex justify-between py-2 border-t pt-4">
                   <span className="font-medium">Total Price:</span>
-                  <span className="font-bold">2000 DH</span>
+                  <span className="font-bold">{room?.price * calculateNumberOfNights(checkIn, checkOut)} USD</span>
                 </div>
               </div>
             </div>
@@ -128,8 +147,8 @@ export default function Reservation() {
                 <div className="bg-gray-50 p-3 rounded-md text-sm">
                   <p>
                     You will proceed with a secure payment of{" "}
-                    <span className="font-bold">2000 DH</span> to{" "}
-                    <span className="font-bold">Hotel XYZ</span>.
+                    <span className="font-bold">{room?.price * calculateNumberOfNights(checkIn, checkOut)} USD</span> to{" "}
+                    <span className="font-bold">Ait Isfoul Hotel</span>.
                   </p>
                   <p>You will be redirected to our payment partner's site.</p>
                 </div>

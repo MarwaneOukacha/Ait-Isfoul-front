@@ -5,35 +5,29 @@ import { Link } from 'react-router-dom';
 import { login } from '../services/auth';
 import { toast } from 'sonner';
 
-
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleSignIn =async  (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    /*try {
-      const user = await login({ email: 'marwaneoukacha2001@gmail.com', password: 'PB267544' });
-      
+    try {
+      setLoading(true);
+      const user = await login({ email, password });
+      toast('Logged in');
+      window.location.href = '/';
       console.log('Logged in:', user);
     } catch (e) {
       console.error(e.message);
-    }*/
-    
-    setLoading(true);
-
-    // Simulate an async sign-in (e.g., fetch or Firebase)
-    setTimeout(() => {
-      localStorage.setItem('authToken', 'mock-token-123'); // Store token or user object
-      toast('Logged in')
+      toast.error('Login failed. Please check your credentials.');
+    } finally {
       setLoading(false);
-      window.location.href = '/'; // or use `navigate('/')` if using `react-router`
-    }, 2000);
-   
+    }
   };
 
   return (
-    
-    <section className="py-20 min-h-screen flex items-center justify-center">      
+    <section className="py-20 min-h-screen flex items-center justify-center">
       <div className="w-full max-w-lg bg-white p-10 rounded-xl shadow-xl">
         <h2 className="text-3xl font-semibold text-center mb-6">Welcome Back</h2>
 
@@ -43,6 +37,8 @@ const SignIn = () => {
             <input
               type="email"
               placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               required
             />
@@ -53,6 +49,8 @@ const SignIn = () => {
             <input
               type="password"
               placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               required
             />
@@ -90,6 +88,7 @@ const SignIn = () => {
           </button>
         </form>
 
+        {/* Third-party sign-in buttons */}
         <div className="flex items-center my-6">
           <hr className="flex-grow border-t border-gray-300" />
           <span className="mx-4 text-gray-400">or</span>
@@ -115,7 +114,7 @@ const SignIn = () => {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Don’t have an account?{' '}
-          <Link to='/register'  className="text-accent hover:underline">
+          <Link to="/register" className="text-accent hover:underline">
             Create one
           </Link>
         </p>

@@ -41,3 +41,12 @@ export const getRoomDetails=async ({id})=>{
   const response=await axiosInstance.get(`/rooms/room/${id}`)
   return response;
 }
+
+// roomService.js
+export const checkRoomAvailability = async ({ roomId, checkIn, checkOut }) => {
+  return await axiosInstance.post('/rooms/isRoomAvailable', {
+    roomId,
+    checkIn,
+    checkOut,
+  });
+};

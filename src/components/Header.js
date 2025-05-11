@@ -14,7 +14,7 @@ const Header = () => {
 
   // Mocked auth state (replace with actual auth context or logic)
   const [user, setUser] = useState(() => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('auth_token');
     return token ? { name: 'John Doe' } : null;
   });
 
@@ -29,7 +29,9 @@ const Header = () => {
 
   // Logout function
   const logout = () => {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('refresh_token');
+  
     setUser(null);
     navigate('/');
   };
