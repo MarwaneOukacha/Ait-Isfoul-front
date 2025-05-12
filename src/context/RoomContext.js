@@ -17,7 +17,7 @@ const RoomProvider = ({children}) => {
   useEffect(()=>{
    const fetchData = async () => {
     try {
-      const data = await searchRooms({ hotelRef: '450944384317' });
+      const data = await searchRooms({ hotelRef: '450944880104' });
       console.log(data.content)
       setRooms(data.content || []); // depends on your API structure
     } catch (error) {

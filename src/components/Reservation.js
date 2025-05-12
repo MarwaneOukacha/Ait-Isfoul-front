@@ -1,5 +1,4 @@
 import { FaBed, FaMoneyBillWave, FaCalendarAlt, FaSpinner } from "react-icons/fa";
-import RommeH02 from '../assets/img/rooms/room02.jpg';
 import mastercard from '../assets/img/masterCardd.png';
 import visa from '../assets/img/visaa.png';
 import american from '../assets/img/americann.png';
@@ -45,7 +44,7 @@ export default function Reservation() {
       phoneNumber: phoneNumber,
       email: email,
       currency: "USD",
-      customerId: "e3744606-776d-4f55-9567-045b27a446f0",
+      customerId: userId,
       checkIn: formatDateTime(checkIn),
       checkOut: formatDateTime(checkOut),
       total: total,

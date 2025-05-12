@@ -58,7 +58,22 @@ const SignUp = () => {
           </button>
         </form>
 
-        <div className="flex items-center my-6">
+        
+
+        <p className="mt-6 text-center text-sm text-gray-600">
+          Already have an account?{' '}
+          <Link to="/login" className="text-accent hover:underline">
+            Sign in
+          </Link>
+        </p>
+      </div>
+    </section>
+  );
+};
+
+export default SignUp;
+/**
+ * <div className="flex items-center my-6">
           <hr className="flex-grow border-t border-gray-300" />
           <span className="mx-4 text-gray-400">or</span>
           <hr className="flex-grow border-t border-gray-300" />
@@ -80,16 +95,5 @@ const SignUp = () => {
             Sign up with Facebook
           </button>
         </div>
-
-        <p className="mt-6 text-center text-sm text-gray-600">
-          Already have an account?{' '}
-          <Link to="/login" className="text-accent hover:underline">
-            Sign in
-          </Link>
-        </p>
-      </div>
-    </section>
-  );
-};
-
-export default SignUp;
+ * 
+ */

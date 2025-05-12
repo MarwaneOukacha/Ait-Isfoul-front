@@ -93,14 +93,29 @@ const SignIn = () => {
           </button>
         </form>
 
-        {/* Third-party sign-in buttons */}
-        <div className="flex items-center my-6">
-          <hr className="flex-grow border-t border-gray-300" />
-          <span className="mx-4 text-gray-400">or</span>
-          <hr className="flex-grow border-t border-gray-300" />
-        </div>
+        
+        
 
-        <div className="space-y-3">
+        <p className="mt-6 text-center text-sm text-gray-600">
+          Don’t have an account?{' '}
+          <Link to="/register" className="text-accent hover:underline">
+            Create one
+          </Link>
+        </p>
+      </div>
+    </section>
+  );
+};
+
+export default SignIn;
+
+/*
+ <div className="flex items-center my-6">
+ <hr className="flex-grow border-t border-gray-300" />
+ <span className="mx-4 text-gray-400">or</span>
+ <hr className="flex-grow border-t border-gray-300" />
+</div>
+ * <div className="space-y-3">
           <button
             onClick={() => console.log('Sign in with Google')}
             className="flex items-center justify-center w-full border border-gray-300 py-2 rounded-lg hover:bg-gray-100 transition"
@@ -116,16 +131,5 @@ const SignIn = () => {
             Sign in with Facebook
           </button>
         </div>
-
-        <p className="mt-6 text-center text-sm text-gray-600">
-          Don’t have an account?{' '}
-          <Link to="/register" className="text-accent hover:underline">
-            Create one
-          </Link>
-        </p>
-      </div>
-    </section>
-  );
-};
-
-export default SignIn;
+ * 
+ */

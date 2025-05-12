@@ -12,21 +12,31 @@ const SECRET_KEY = 'AERF3456sd34TG@2&è(--+à@fjffkdz,'; //replace with a secure
 
 // Encrypt & store token
 const saveToken = (token, refreshToken) => {
-  const encrypted = CryptoJS.AES.encrypt(token, SECRET_KEY).toString();
-  const encryptedRefresh = CryptoJS.AES.encrypt(refreshToken, SECRET_KEY).toString();
+  const tokenB64 = btoa(token); // Encode to Base64
+  const refreshB64 = btoa(refreshToken);
+
+  const encrypted = CryptoJS.AES.encrypt(tokenB64, SECRET_KEY).toString();
+  const encryptedRefresh = CryptoJS.AES.encrypt(refreshB64, SECRET_KEY).toString();
+
   localStorage.setItem(TOKEN_KEY, encrypted);
   localStorage.setItem(REFRESH_KEY, encryptedRefresh);
 };
 
+
 const getToken = () => {
   const encrypted = localStorage.getItem(TOKEN_KEY);
   if (!encrypted) return null;
+
   try {
-    return CryptoJS.AES.decrypt(encrypted, SECRET_KEY).toString(CryptoJS.enc.Utf8);
+    const bytes = CryptoJS.AES.decrypt(encrypted, SECRET_KEY);
+    const decodedB64 = bytes.toString(CryptoJS.enc.Utf8);
+    return atob(decodedB64); // Decode from Base64
   } catch (e) {
+    console.error('Token decryption failed:', e);
     return null;
   }
 };
+
 
 const getRefreshToken = () => {
   const encrypted = localStorage.getItem(REFRESH_KEY);
