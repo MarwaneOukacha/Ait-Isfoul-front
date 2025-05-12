@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
+
 
 export const createBooking = async (bookingRequest) => {
   if (!bookingRequest) {
@@ -6,7 +7,7 @@ export const createBooking = async (bookingRequest) => {
   }
 
   try {
-    const response = await axios.post('http://localhost:8088/bookings/create', bookingRequest);
+    const response = await axiosInstance.post('/bookings/create', bookingRequest);
     return response.data; // This should match BookingResponseDTO
   } catch (error) {
     console.error('Error creating booking:', error);

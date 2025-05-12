@@ -3,7 +3,7 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { FaBars, FaTimes, FaUserCircle } from 'react-icons/fa';
 import LogoWhite from '../assets/img/white.svg';
 import LogoDark from '../assets/img/white.svg';
-
+import { logout } from '../services/auth';
 const Header = () => {
   const [header, setHeader] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

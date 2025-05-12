@@ -1,4 +1,7 @@
 import axiosInstance from '../services/axiosInstance';
+import { jwtDecode } from 'jwt-decode';
+
+
 
 import CryptoJS from 'crypto-js';
 
@@ -70,4 +73,19 @@ export const logout = () => {
   clearTokens();
 };
 
+// Function to extract user_id from JWT token
+export const getUserIdFromToken = () => {
+  const token = getAuthToken();
+  if (!token) return null;
+
+  try {
+    const decoded = jwtDecode(token); // Decode the JWT
+    console.log('Decoded JWT:', decoded); // Log the entire decoded JWT
+
+    return decoded.userID || null; // Return userID if present
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return null;
+  }
+};
 export const getAuthToken = () => getToken();

@@ -89,7 +89,8 @@ const handleBookNow = async () => {
           room,
           checkIn,
           checkOut,
-          total
+          total,
+          id
         }
       });
     } else {
