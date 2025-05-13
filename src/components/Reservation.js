@@ -177,7 +177,8 @@ export default function Reservation() {
               </div>
 
               <div className="space-y-4">
-                <h3 className="font-semibold">Payment Method</h3>
+                {/**
+                 * <h3 className="font-semibold">Payment Method</h3>
                 <div className="flex items-center space-x-2">
                   <input type="radio" id="credit-card" name="payment" value="credit-card" />
                   <label htmlFor="credit-card">Credit Card</label>
@@ -186,6 +187,9 @@ export default function Reservation() {
                   <input type="radio" id="cash" name="payment" value="cash" />
                   <label htmlFor="cash">PayPal</label>
                 </div>
+                 * 
+                 */}
+                
 
                 <div className="bg-gray-50 p-3 rounded-md text-sm">
                   <p>

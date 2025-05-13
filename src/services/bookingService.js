@@ -14,3 +14,25 @@ export const createBooking = async (bookingRequest) => {
     throw new Error(error.response?.data?.message || error.message);
   }
 };
+
+export const searchMyBookings = async ({
+  keyword,
+  status,
+  checkIn,
+  checkOut,
+  page = 0,
+  size = 10
+} = {}) => {
+  const response = await axiosInstance.get('/bookings/myBookings', {
+    params: {
+      keyword,
+      status,
+      checkIn,
+      checkOut,
+      page,
+      size
+    }
+  });
+
+  return response.data;
+};

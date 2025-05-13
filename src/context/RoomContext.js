@@ -17,7 +17,7 @@ const RoomProvider = ({children}) => {
   useEffect(()=>{
    const fetchData = async () => {
     try {
-      const data = await searchRooms({ hotelRef: '450944941738' });
+      const data = await searchRooms({ hotelRef: '450944384317' });
       console.log(data.content)
       setRooms(data.content || []); // depends on your API structure
     } catch (error) {
@@ -26,19 +26,20 @@ const RoomProvider = ({children}) => {
   };
 
   fetchData();
-    setTotal(Number(adults[0])+Number(kids[0]));
-  },[adults,kids])
-  const handleClick=(e)=>{
+  setTotal(Number(adults[0])+Number(kids[0]));
+  },[adults, kids])
+
+  const handleClick= async (e,{ minPrice, maxPrice })=>{
     e.preventDefault();
     setLoading(true);
-    const newRooms=roomData.filter((room)=>{  
-      return total<=room.maxPerson
-    });
-    setTimeout(()=>{
-      setRooms(newRooms); //I need to fix it for the api case 
-      setLoading(false)
-    },3000)
-    
+    try {
+      const data = await searchRooms({ hotelRef: '450944384317' ,minPrice:minPrice,maxPrice:maxPrice,maxPeople:total});
+      console.log(data.content)
+      setRooms(data.content || []); // depends on your API structure
+    } catch (error) {
+      console.error('Error fetching rooms:', error);
+    }
+    setLoading(false)
   }
   return <RoomContext.Provider value={{ rooms, adults ,setAdults,kids,setKids,total,setTotal,setRooms,handleClick,loading}}>
         {children}
