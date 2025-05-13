@@ -12,11 +12,8 @@ const SECRET_KEY = 'AERF3456sd34TG@2&è(--+à@fjffkdz,'; //replace with a secure
 
 // Encrypt & store token
 const saveToken = (token, refreshToken) => {
-  const tokenB64 = btoa(token); // Encode to Base64
-  const refreshB64 = btoa(refreshToken);
-
-  const encrypted = CryptoJS.AES.encrypt(tokenB64, SECRET_KEY).toString();
-  const encryptedRefresh = CryptoJS.AES.encrypt(refreshB64, SECRET_KEY).toString();
+  const encrypted = CryptoJS.AES.encrypt(token, SECRET_KEY).toString();
+  const encryptedRefresh = CryptoJS.AES.encrypt(refreshToken, SECRET_KEY).toString();
 
   localStorage.setItem(TOKEN_KEY, encrypted);
   localStorage.setItem(REFRESH_KEY, encryptedRefresh);
@@ -29,13 +26,13 @@ const getToken = () => {
 
   try {
     const bytes = CryptoJS.AES.decrypt(encrypted, SECRET_KEY);
-    const decodedB64 = bytes.toString(CryptoJS.enc.Utf8);
-    return atob(decodedB64); // Decode from Base64
+    return bytes.toString(CryptoJS.enc.Utf8); // Just return raw decrypted JWT
   } catch (e) {
     console.error('Token decryption failed:', e);
     return null;
   }
 };
+
 
 
 const getRefreshToken = () => {
@@ -56,8 +53,8 @@ const clearTokens = () => {
 export const login = async ({ email, password }) => {
   try {
     const response = await axiosInstance.post(`${API_BASE}/login`, { email, password });
-    const { access_token, refresh_token } = response.data;
-    saveToken(access_token, refresh_token);
+    const { accessToken, refreshToken } = response.data;
+    saveToken(accessToken, refreshToken);
     return response.data;
   } catch (err) {
     throw new Error(err.response?.data?.message || 'Login failed');
@@ -92,7 +89,7 @@ export const getUserIdFromToken = () => {
     const decoded = jwtDecode(token); // Decode the JWT
     console.log('Decoded JWT:', decoded); // Log the entire decoded JWT
 
-    return decoded.userID || null; // Return userID if present
+    return decoded.customerID || null; // Return userID if present
   } catch (error) {
     console.error('Error decoding token:', error);
     return null;

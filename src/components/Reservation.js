@@ -71,6 +71,7 @@ export default function Reservation() {
   useEffect(() => {
     const idi = getUserIdFromToken();
     setUserId(idi);
+    console.log(idi)
   }, []);
 
   return (
