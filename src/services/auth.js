@@ -61,6 +61,15 @@ export const login = async ({ email, password }) => {
   }
 };
 
+export const Registre = async ({ email, password,firstName,lastName,phoneNumber,iden,type }) => {
+  try {
+    const response = await axiosInstance.post(`${API_BASE}/customers/add`, { email,firstName,lastName,phoneNumber,iden,password,type });
+    return response.data;
+  } catch (err) {
+    throw new Error(err.response?.data?.message || 'Registre failed');
+  }
+};
+
 export const refreshToken = async () => {
   const token = getRefreshToken();
   if (!token) throw new Error('No refresh token found');
