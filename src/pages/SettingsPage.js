@@ -1,15 +1,29 @@
-import { useState } from "react";
-import profile from "../assets/img/profile1.jpg";
+import { useEffect, useState } from "react";
+import { getUserIdFromToken, profile } from "../services/auth";
+import { useLocation, useParams } from "react-router-dom";
+import profileImg from "../assets/img/profile1.jpg"
 
 const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState("profile");
-  const [profileData, setProfileData] = useState({
-    firstName: "Mehdi",
-    lastName: "Oukacha",
-    email: "marwaneoukacha2001@gmail.com",
-    phone: "0689377750",
-    points: 6,
-  });
+  const [profileData, setProfileData] = useState({});
+  const [userId, setUserId] = useState(null);
+useEffect(() => {
+  const idi=getUserIdFromToken();
+  setUserId(idi);
+  const fetchProfile = async () => {
+    try {
+      const data = await profile({ id: userId });
+      setProfileData(data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  if (userId) {
+    fetchProfile();
+  }
+}, [userId]);
+
 
   const [passwords, setPasswords] = useState({
     current: "",
@@ -54,7 +68,7 @@ const SettingsPage = () => {
           <div className="flex flex-col items-center">
             <div className="relative mb-4">
               <div className="w-32 h-32 rounded-full border-4 border-gray-100 overflow-hidden">
-                <img src={profile} alt="Profile" className="w-full h-full object-cover" />
+                <img src={profileImg} alt="Profile" className="w-full h-full object-cover" />
               </div>
             </div>
 
@@ -131,7 +145,7 @@ const SettingsPage = () => {
                     <input
                       type="text"
                       name="phone"
-                      value={profileData.phone}
+                      value={profileData.phoneNumber}
                       onChange={handleProfileChange}
                       className="w-full px-3 py-2 border rounded-md"
                     />

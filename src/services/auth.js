@@ -70,6 +70,22 @@ export const Registre = async ({ email, password,firstName,lastName,phoneNumber,
   }
 };
 
+export const profile = async ({ id }) => {
+  if (!id) {
+    throw new Error('id is required');
+  }
+
+  try {
+    const response = await axiosInstance.get(`/customers/profile/${id}`);
+    return response.data;
+  } catch (err) {
+    const errorMessage = err?.response?.data?.message || 'Loading profile failed';
+    console.error('Profile fetch error:', errorMessage);
+    throw new Error(errorMessage);
+  }
+};
+
+
 export const refreshToken = async () => {
   const token = getRefreshToken();
   if (!token) throw new Error('No refresh token found');
