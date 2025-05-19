@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUserIdFromToken, profile } from "../services/auth";
+import { getUserIdFromToken, getUserInfoFromToken, profile } from "../services/auth";
 import { useLocation, useParams } from "react-router-dom";
 import profileImg from "../assets/img/profile1.jpg"
 
@@ -7,22 +7,15 @@ const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const [profileData, setProfileData] = useState({});
   const [userId, setUserId] = useState(null);
-useEffect(() => {
-  const idi=getUserIdFromToken();
-  setUserId(idi);
-  const fetchProfile = async () => {
-    try {
-      const data = await profile({ id: userId });
-      setProfileData(data);
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
 
-  if (userId) {
-    fetchProfile();
+  useEffect(() => {
+  const userInfo = getUserInfoFromToken();
+  if (userInfo) {
+    setProfileData(userInfo);
+  } else {
+    console.error("User info not found in token.");
   }
-}, [userId]);
+}, []);
 
 
   const [passwords, setPasswords] = useState({

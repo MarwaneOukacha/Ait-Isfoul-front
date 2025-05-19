@@ -33,6 +33,27 @@ const getToken = () => {
   }
 };
 
+export const getUserInfoFromToken = () => {
+  const token = getAuthToken();
+  if (!token) return null;
+
+  try {
+    const decoded = jwtDecode(token); // Decode the JWT
+    console.log('Decoded JWT:', decoded);
+
+    // Extract fields directly (these must be included in the token when it's generated server-side)
+    return {
+      customerID: decoded.customerID,
+      firstName: decoded.FirstName,
+      lastName: decoded.LastName,
+      email: decoded.email,
+      phoneNumber: decoded.phoneNumber,
+    };
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return null;
+  }
+};
 
 
 const getRefreshToken = () => {
