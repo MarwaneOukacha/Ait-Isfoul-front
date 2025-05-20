@@ -48,6 +48,7 @@ export const getUserInfoFromToken = () => {
       lastName: decoded.LastName,
       email: decoded.email,
       phoneNumber: decoded.phoneNumber,
+      iden:decoded.Iden
     };
   } catch (error) {
     console.error('Error decoding token:', error);
@@ -82,6 +83,16 @@ export const login = async ({ email, password }) => {
   }
 };
 
+
+export const changePassword = async ({ oldPassword, newPassword }) => {
+  try {
+    const response = await axiosInstance.post(`${API_BASE}/change-password`, { oldPassword, newPassword });
+    return response.data;
+  } catch (err) {
+    throw new Error(err.response?.data?.message || 'Change-password failed');
+  }
+};
+
 export const Registre = async ({ email, password,firstName,lastName,phoneNumber,iden,type }) => {
   try {
     const response = await axiosInstance.post(`${API_BASE}/customers/add`, { email,firstName,lastName,phoneNumber,iden,password,type });
@@ -91,20 +102,6 @@ export const Registre = async ({ email, password,firstName,lastName,phoneNumber,
   }
 };
 
-export const profile = async ({ id }) => {
-  if (!id) {
-    throw new Error('id is required');
-  }
-
-  try {
-    const response = await axiosInstance.get(`/customers/profile/${id}`);
-    return response.data;
-  } catch (err) {
-    const errorMessage = err?.response?.data?.message || 'Loading profile failed';
-    console.error('Profile fetch error:', errorMessage);
-    throw new Error(errorMessage);
-  }
-};
 
 
 export const refreshToken = async () => {
