@@ -4,7 +4,7 @@ import { getAuthToken, refreshToken, logout } from '../services/auth';
 const SKIP_AUTH_PATHS = ['/login', '/refresh-token','/customers/add','/rooms/search/hotel','/rooms/isRoomAvailable','/rooms/room/','/email/contact'];
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8088',
+  baseURL: 'http://188.34.188.31:8088',
 });
 
 // Request interceptor
@@ -15,7 +15,6 @@ axiosInstance.interceptors.request.use(
       const token = getAuthToken();
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
-        console.log('Attached token to request:', token);
       } else {
         console.warn('No token found');
       }
