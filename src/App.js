@@ -9,6 +9,8 @@ import Reservation from './components/Reservation';
 import ReservationList from './components/ReservationList';
 import SettingsPage from './pages/SettingsPage';
 import { Toaster } from 'sonner';
+import BookingInvoicePDF from './components/Invoice';
+import Invoice from './components/Invoice';
 
 
 const roomDetails = {

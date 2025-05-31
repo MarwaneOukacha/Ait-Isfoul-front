@@ -4,7 +4,7 @@ import { getAuthToken, refreshToken, logout } from '../services/auth';
 const SKIP_AUTH_PATHS = ['/login', '/refresh-token','/customers/add','/rooms/search/hotel','/rooms/isRoomAvailable','/rooms/room/','/email/contact'];
 
 const axiosInstance = axios.create({
-  baseURL: 'http://188.34.188.31:8088',
+  baseURL: 'http://localhost:8088',
 });
 
 // Request interceptor
