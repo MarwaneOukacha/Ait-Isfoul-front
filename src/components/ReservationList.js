@@ -226,31 +226,38 @@ const styles = StyleSheet.create({
 
 // === PDF Invoice Document Component ===
 function InvoicePDFDocument({ booking }) {
+  console.log("Booking data:", booking);
+
   const {
-    bookingReference,
-    room,
-    checkIn,
-    price,
-    customer,
+    bookingReference = "N/A",
+    room = {},
+    checkIn = "",
+    price = 0,
+    customer = {},
   } = booking;
 
+  // customer may have firstName and lastName instead of name
+  const customerName = customer.firstName && customer.lastName 
+    ? `${customer.firstName} ${customer.lastName}`
+    : customer.name || "Customer Name";
+
   const invoiceDate = new Date().toLocaleDateString();
-  const invoiceNumber = bookingReference || "N/A";
+  const invoiceNumber = bookingReference;
 
   const services = [
     {
-      date: checkIn || "",
-      description: room?.title || "Room booking",
+      date: checkIn,
+      description: room.title || "Room booking",
       qty: "1",
       rate: `${price} USD`,
       total: `${price} USD`,
     },
   ];
 
-  const subtotal = price || "0.00";
+  const subtotal = parseFloat(price) || 0;
   const vatRate = "20%";
-  const vatAmount = (parseFloat(subtotal) * 0.2).toFixed(2);
-  const totalPayable = (parseFloat(subtotal) + parseFloat(vatAmount)).toFixed(2);
+  const vatAmount = (subtotal * 0.2).toFixed(2);
+  const totalPayable = (subtotal + parseFloat(vatAmount)).toFixed(2);
 
   return (
     <Document>
@@ -280,16 +287,20 @@ function InvoicePDFDocument({ booking }) {
           </View>
           <View style={styles.customerSection}>
             <Text style={styles.sectionHeader}>CUSTOMER</Text>
-            <Text style={styles.providerText}>{customer?.name || "Customer Name"}</Text>
-            <Text style={styles.providerText}>{customer?.email || "email@example.com"}</Text>
+            <Text style={styles.providerText}>{customerName}</Text>
+            <Text style={styles.providerText}>{customer.email || "email@example.com"}</Text>
           </View>
         </View>
 
         {/* Billing Information */}
         <View style={styles.billingSection}>
           <Text style={styles.sectionHeader}>BILLING INFORMATION</Text>
-          <Text style={styles.billingText}><Text style={styles.billingLabel}>BIC:</Text> ABCDGB21</Text>
-          <Text style={styles.billingText}><Text style={styles.billingLabel}>IBAN:</Text> GB39 ABCD 0011 0011 0011 00</Text>
+          <Text style={styles.billingText}>
+            <Text style={styles.billingLabel}>BIC:</Text> ABCDGB21
+          </Text>
+          <Text style={styles.billingText}>
+            <Text style={styles.billingLabel}>IBAN:</Text> GB39 ABCD 0011 0011 0011 00
+          </Text>
           <Text style={styles.billingText}>Account number: 01234567</Text>
           <Text style={styles.billingText}>Sort code: 01-00-01</Text>
         </View>
@@ -497,6 +508,7 @@ export default function ReservationList() {
                     <span className="text-gray-500">Check-out:</span>
                     <span className="ml-2">{booking.checkOut}</span>
                   </div>
+                 
                 </div>
                 <button
                   className="mt-4 text-blue-500"
@@ -509,6 +521,12 @@ export default function ReservationList() {
                     <p><strong>Customer:</strong> {`${booking.customer.firstName} ${booking.customer.lastName}`}</p>
                     <p><strong>Email:</strong> {booking.customer.email}</p>
                     <p><strong>Phone:</strong> {booking.customer.phoneNumber}</p>
+                    <button
+                        className="mt-4 text-accent hover:text-accent-700 transition-colors duration-300"
+                        onClick={() => handleDownloadInvoice(booking)}
+                      >
+                        Download Invoice
+                      </button>
                   </div>
                 )}
               </div>
