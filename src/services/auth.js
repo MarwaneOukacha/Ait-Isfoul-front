@@ -72,6 +72,17 @@ const clearTokens = () => {
   localStorage.removeItem(REFRESH_KEY);
 };
 
+export const verifyOtp = async ({ email,otp }) => {
+  try{
+    const response = await axiosInstance.post(`${API_BASE}/verify-otp`, {email,otp});
+     return response.data;
+  }catch(err){
+    throw new Error('OTP verification failed');
+  }
+  
+ 
+};
+
 export const login = async ({ email, password }) => {
   try {
     const response = await axiosInstance.post(`${API_BASE}/login`, { email, password });

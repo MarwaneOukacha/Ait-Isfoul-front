@@ -11,6 +11,7 @@ import SettingsPage from './pages/SettingsPage';
 import { Toaster } from 'sonner';
 import BookingInvoicePDF from './components/Invoice';
 import Invoice from './components/Invoice';
+import OtpVerification from './pages/OtpVerification';
 
 
 const roomDetails = {
@@ -55,6 +56,11 @@ const router = createBrowserRouter([
         path: 'settings',
         element:<SettingsPage/>
 
+      },
+      {
+        path: '/:email/verification',
+        element:<OtpVerification/>
+        
       }
     ],
   },

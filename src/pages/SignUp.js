@@ -40,7 +40,7 @@ const SignUp = () => {
       });
 
       toast.success("Registration successful!");
-      navigate("/login")
+      navigate(`/${formData.email}/verification`);
       // Optionally redirect or reset the form here
     } catch (err) {
       toast.error(err.message || "Registration failed.");
