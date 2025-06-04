@@ -80,8 +80,21 @@ export const verifyOtp = async ({ email,otp }) => {
     throw new Error('OTP verification failed');
   }
   
+
+};
+
+
+export const resendOtp = async ({ email }) => {
+  try{
+    const response = await axiosInstance.post(`${API_BASE}/resend-otp`, {email});
+     return response.data;
+  }catch(err){
+    throw new Error('Resend OTP failed');
+  }
+  
  
 };
+
 
 export const login = async ({ email, password }) => {
   try {

@@ -17,7 +17,7 @@ const RoomProvider = ({children}) => {
   useEffect(()=>{
    const fetchData = async () => {
     try {
-      const data = await searchRooms({ hotelRef: '450944384317' });
+      const data = await searchRooms({ hotelRef: '450944016524' });
       console.log(data.content)
       setRooms(data.content || []); // depends on your API structure
     } catch (error) {
@@ -33,7 +33,7 @@ const RoomProvider = ({children}) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const data = await searchRooms({ hotelRef: '450944384317' ,minPrice:minPrice,maxPrice:maxPrice,maxPeople:total});
+      const data = await searchRooms({ hotelRef: '450944016524' ,minPrice:minPrice,maxPrice:maxPrice,maxPeople:total});
       console.log(data.content)
       setRooms(data.content || []); // depends on your API structure
     } catch (error) {

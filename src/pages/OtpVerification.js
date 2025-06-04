@@ -28,6 +28,34 @@ const OtpVerification = () => {
     }
   };
 
+  const resendOtp = async () => {
+
+  try {
+    await resendOtp({ email });
+
+    toast.success('OTP resent successfully!', {
+      style: {
+        background: '#16a34a', // Green
+        color: 'white',
+      },
+    });
+  } catch (error) {
+    console.error('Resend OTP error:', error);
+
+    toast.error(
+      error?.response?.data || 'Failed to resend OTP. Please try again later.',
+      {
+        style: {
+          background: '#dc2626', // Red
+          color: 'white',
+        },
+      }
+    );
+  }
+};
+
+
+
   return (
     <section className="py-20 min-h-screen flex items-center justify-center">
       <div className="w-full max-w-md bg-white p-10 rounded-xl shadow-xl">
@@ -83,7 +111,7 @@ const OtpVerification = () => {
           Didn't get the code?{' '}
           <button
             type="button"
-            onClick={() => toast('Resend OTP not implemented')}
+            onClick={() => resendOtp()}
             className="text-accent hover:underline"
           >
             Resend

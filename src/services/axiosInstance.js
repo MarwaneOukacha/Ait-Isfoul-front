@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getAuthToken, refreshToken, logout } from '../services/auth';
 
-const SKIP_AUTH_PATHS = ['/login', '/refresh-token','/customers/add','/rooms/search/hotel','/rooms/isRoomAvailable','/rooms/room/','/email/contact'];
+const SKIP_AUTH_PATHS = ['/login','/verify-otp', '/refresh-token','/customers/add','/rooms/search/hotel','/rooms/isRoomAvailable','/rooms/room/','/email/contact'];
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:8088',
