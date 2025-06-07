@@ -9,59 +9,50 @@ import Reservation from './components/Reservation';
 import ReservationList from './components/ReservationList';
 import SettingsPage from './pages/SettingsPage';
 import { Toaster } from 'sonner';
-import BookingInvoicePDF from './components/Invoice';
-import Invoice from './components/Invoice';
+
 import OtpVerification from './pages/OtpVerification';
+import ProtectedRoute from './components/ProtectedRoute';
 
 
 const roomDetails = {
-  hotelName: 'HÔTEL DE PARIS',
-  roomType: 'Suite Présidentielle',
+  hotelName: 'Ait-Isfoul HÔTEL',
+  roomType: 'Suite',
   price: 2500,
-  features: ['2 lits king-size', 'Vue mer', 'Jacuzzi privé']
+  features: ['2 lits king-size', 'Jacuzzi privé']
 };
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
     children: [
-      {
-        index: true, // equivalent to path: '/'
-        element: <Home />,
-      },
-      {
-        path: 'room/:id',
-        element: <RoomDetails />,
-      },
-      {
-        path: 'register',
-        element: <SignUp />,
-      },
-      {
-        path: 'Login',
-        element: <SignIn />,
-      },
+      { index: true, element: <Home /> },
+      { path: 'room/:id', element: <RoomDetails /> },
+      { path: 'register', element: <SignUp /> },
+      { path: 'Login', element: <SignIn /> },
       {
         path: 'Book',
-        element:<Reservation roomDetails={roomDetails} /> 
-        
-
+        element: <Reservation roomDetails={roomDetails} />,
       },
       {
         path: 'my-bookings',
-        element:<ReservationList/>
-
+        element: (
+          <ProtectedRoute>
+            <ReservationList />
+          </ProtectedRoute>
+        ),
       },
       {
         path: 'settings',
-        element:<SettingsPage/>
-
+        element: (
+          <ProtectedRoute>
+            <SettingsPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/:email/verification',
-        element:<OtpVerification/>
-        
-      }
+        element: <OtpVerification />,
+      },
     ],
   },
 ]);
