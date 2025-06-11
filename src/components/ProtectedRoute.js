@@ -9,7 +9,7 @@ const isTokenExpired = (token) => {
   try {
     const decoded = jwtDecode(token);
     if (!decoded.exp) return false;
-    return decoded.exp * 1000 < Date.now(); // Convert to ms
+    return decoded.exp * 1000 < Date.now(); 
   } catch (e) {
     return true;
   }
