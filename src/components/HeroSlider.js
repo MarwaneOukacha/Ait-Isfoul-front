@@ -10,17 +10,17 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const slides=[
   {
-    title:'Lodge & Retreat Center',
+    title:'Aitisfoul Lodge + Retreat Centre',
     bg:Img1,
     btnText:'See our rooms'
   },
   {
-    title:'Lodge & Retreat Center',
+    title:'Aitisfoul Lodge + Retreat Centre',
     bg:Img2,
     btnText:'See our rooms'
   },
   {
-    title:'Lodge & Retreat Center',
+    title:'Aitisfoul Lodge + Retreat Centre',
     bg:Img3,
     btnText:'See our rooms'
   }
@@ -48,7 +48,7 @@ const HeroSlider = () => {
         return <SwiperSlide className='h-full relative flex justify-center items-center' key={index}>
           <div className='z-20 text-white text-center'>
             <div className='uppercase font-tertiary  tracking-[6px] mb-5'>
-            experience desert life
+            Escape + Explore + Experience Desert Life
             </div>
             <h1 className='text-[32px] font-primary uppercase tracking-[2px] max-w-[920px] lg:text-[68px] leading-tight mb-6'>{slide.title}</h1>
             <button className='btn btn-lg btn-primary mx-auto' onClick={(e) => handleNavClick(e, 'rooms')}>{slide.btnText}</button>

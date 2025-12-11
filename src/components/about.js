@@ -18,9 +18,7 @@ const About = () => {
           </div>
           <h2 className="font-primary text-[45px] mb-4">Who We Are</h2>
           <p className="max-w-2xl mx-auto text-lg text-gray-600">
-            Experience luxury and tranquility in the heart of Morocco. Our hotel
-            blends traditional elegance with modern comfort to provide an
-            unforgettable stay.
+            Founded by Mohamed Yassine, Aitisfoul has been lovingly restored by local owner Kamal Yassine, Mohamed's grandson and partner, Canadian artist + designer Michelle Fletcher. Jointly and in collaboration with local artisans and craftsman, we have used traditional techniques and reclaimed materials whenever possible.
           </p>
         </div>
 
@@ -34,9 +32,9 @@ const About = () => {
             />
           </div>
           <div className="w-full lg:w-1/2 p-6 text-center lg:text-left">
-            <h3 className="font-primary text-[30px] mb-4">local life</h3>
+            <h3 className="font-primary text-[30px] mb-4">What is Aitisfoul?</h3>
             <p className="text-gray-600 text-lg">
-            A masterpiece of simplicity and expression, the clay buildings cleverly negotiates various pragmatic and emotive elements of the real desert experience. (The Berber’s) weren’t thinking about making something that looked a certain way, they were thinking, ‘Where is the sun, the wind? What is the structure’s purpose within its environment?’ That’s why their buildings have remained over time. Likewise, at Aitisfoul we started with the original purpose of the structure, the history of the local village life and the personality of the place. The concept evolved from these things organically.
+            Aitisfoul is a Kasbah of pisé architecture (rammed clay) with local Amazigh influences. Restoring the Kasbah was more an act of preservation and restoration than of transformation. We highlighted the structure's weather-worn imperfections, wabi-sabi nature and blended it with the local desert environment, and the simple elegance of the Sahara, with all its stunning golden hues.
             </p>
           </div>
         </section>
@@ -51,10 +49,9 @@ const About = () => {
             />
           </div>
           <div className="w-full lg:w-1/2 p-6 text-center lg:text-left">
-            <h3 className="font-primary text-[30px] mb-4">Desert life</h3>
+            <h3 className="font-primary text-[30px] mb-4">Experience Desert Life</h3>
             <p className="text-gray-600 text-lg">
-            With respect to the founder, Mohamed Yassine's overarching concept of Ait isfoul’s as a “gathering place” for meaningful interactions… its aim at creating connectedness and blurring the boundaries – with both locals and guests –
-            The idea is realized through the buildings and their relations to the environment, whenever possible making the natural life and land,  flow both inside and out.  Communal gathering places revolving around the pool and the covered pavilion are tastefully decorated with elements drawn from the environment  – all to suggest that simplicity is our ultimate luxury. – the simple life, the desert life.
+            Aitisfoul has soul, and is in the heart of an Amazigh village. Aitisfoul is filled with history and local character, we started Aitisfoul to help people experience the desert like a local — with a local. A way to connect with the culture, while finding inspiration from the desert's raw beauty while connecting with others and most importantly yourself. Our wish is that you arrive as visitors and leave as friends, with memories better than your most vivid imagined.
             </p>
           </div>
         </section>

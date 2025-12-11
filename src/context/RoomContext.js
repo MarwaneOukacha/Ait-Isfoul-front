@@ -1,7 +1,7 @@
 import React,{createContext,useEffect,useState} from 'react';
 import { searchRooms } from '../services/roomService'; // path to your API service
 
-import {roomData} from '../data';
+import {roomData, HOTEL_REF} from '../data';
 
 export const RoomContext=createContext();
 
@@ -14,10 +14,10 @@ const RoomProvider = ({children}) => {
   const [total,setTotal]=useState(0);
   const [loading,setLoading]=useState(false);
 
-  useEffect(()=>{
+  useEffect(()=>{;
    const fetchData = async () => {
     try {
-      const data = await searchRooms({ hotelRef: '450944337652' });
+      const data = await searchRooms({ hotelRef: HOTEL_REF });
       console.log(data.content)
       setRooms(data.content || []); // depends on your API structure
     } catch (error) {
@@ -33,7 +33,7 @@ const RoomProvider = ({children}) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const data = await searchRooms({ hotelRef: '450944337652' ,minPrice:minPrice,maxPrice:maxPrice,maxPeople:total});
+      const data = await searchRooms({ hotelRef: HOTEL_REF ,minPrice:minPrice,maxPrice:maxPrice,maxPeople:total});
       console.log(data.content)
       setRooms(data.content || []); // depends on your API structure
     } catch (error) {
