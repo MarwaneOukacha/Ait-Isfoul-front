@@ -1,11 +1,12 @@
 import axiosInstance from '../services/axiosInstance';
 import { jwtDecode } from 'jwt-decode';
+import { API_BASE_URL } from '../data';
 
 
 
 import CryptoJS from 'crypto-js';
 
-const API_BASE = 'http://localhost:8088'; // your API base URL
+const API_BASE = API_BASE_URL; // your API base URL
 const TOKEN_KEY = 'auth_token';
 const REFRESH_KEY = 'refresh_token';
 const SECRET_KEY = 'AERF3456sd34TG@2&è(--+à@fjffkdz,'; //replace with a secure key

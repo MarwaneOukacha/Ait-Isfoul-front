@@ -201,3 +201,6 @@ export const roomData = [
     imageLg: RommeH02,
   },
 ];
+
+export const HOTEL_REF = '089697193124 ';
+export const API_BASE_URL = 'http://localhost:8088';

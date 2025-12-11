@@ -42,8 +42,12 @@ const Contact = () => {
     <section className='py-20 bg-gray-50'>
       <div className='container mx-auto px-4'>
         <div className='text-center mb-12'>
+          <div className='font-tertiary uppercase text-[15px] tracking-[6px] text-accent mb-4'>
+            Escape, Explore + Experience the Desert With Us
+          </div>
           <h2 className='font-primary text-[45px] mb-4'>Contact Us</h2>
-          <p className='text-gray-600'>We’d love to hear from you. Please fill out the form below.</p>
+          <p className='text-gray-600'>We will meet you, where you are! We'd love to hear from you.</p>
+          <p className='text-gray-600 mt-2'>EMAIL: info@aitisfoul.com | KAMAL: +212 670 22 6639 | MICHELLE: +212 666 12 5727</p>
         </div>
 
         <form

@@ -14,11 +14,11 @@ const Services = () => {
         {/* Heading */}
         <div className="text-center mb-12">
           <div className="font-tertiary uppercase text-[15px] tracking-[6px] text-accent">
-            Services
+            Restaurant
           </div>
           <h2 className="font-primary text-[45px] mb-4">Our Restaurant</h2>
           <p className="max-w-2xl mx-auto text-lg text-gray-600">
-          Our restaurant is the heart and soul of Aitisfoul
+          Our restaurant is the heart and soul of Aitisfoul. It epitomizes our ethos: a deep respect for the surroundings and an unwavering simple local Moroccan culture, to be gathered and shared together.
           </p>
         </div>
 
@@ -33,9 +33,9 @@ const Services = () => {
         />
         </div>
         <div className="w-full lg:w-1/2 p-6 text-center lg:text-left">
-        <h3 className="font-primary text-[30px] mb-4">Restaurant</h3>
+        <h3 className="font-primary text-[30px] mb-4">Taste It In The Food</h3>
         <p className="text-gray-600 text-lg">
-        Our restaurant is the heart and soul of Aitisfoul. It epitomizing our ethos: a deep respect for our surroundings and an unwavering simple local moroccan culture, gathered and shared together.
+        All stays include breakfast and lunch + dinner are available upon advance reservation. Our simple space blurs the boundaries between inside and out, serving our guests in different places around the property depending on the season and occasion.
 
 
         </p>
@@ -51,12 +51,9 @@ const Services = () => {
         />
         </div>
         <div className="w-full lg:w-1/2 p-6 text-center lg:text-left">
-        <h3 className="font-primary text-[30px] mb-4">Restaurant</h3>
+        <h3 className="font-primary text-[30px] mb-4">Moroccan Seasonal Food</h3>
         <p className="text-gray-600 text-lg">
-        Taste it in the food, a fusion of global influences and local ingredients that changes with the seasons. 
-
-        Our simple space blurs the boundaries between inside and out. Serving our guests in different places + locations around the property depending on the season and occasion.  
-        Aitisfoul is both, relaxed and refined – a dining experience set in a desert oasis, in and authentic Berbere Village in Southern Morocco.
+        Aitisfoul brings the past and present alive with local details, timeless desert design and Moroccan seasonal food. Aitisfoul is both relaxed and refined – a dining experience set in a desert oasis, in an authentic Amazigh Village in Southern Morocco.
         </p>
         </div>
         </section>
