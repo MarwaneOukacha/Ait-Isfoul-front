@@ -456,7 +456,7 @@ export default function ReservationList() {
                     <td className="px-8 py-5 text-sm text-gray-500">{booking.checkIn}</td>
                     <td className="px-8 py-5 text-sm">
                       <span className={`inline-block px-4 py-2 text-xs font-semibold leading-tight ${
-                        booking.status === "CONFIRMED"
+                        booking.status === "SUCCESSFUL"
                           ? "bg-green-100 text-green-800"
                           : "bg-yellow-100 text-yellow-800"
                       }`}>
