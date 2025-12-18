@@ -99,7 +99,7 @@ export const resendOtp = async ({ email }) => {
 
 export const login = async ({ email, password }) => {
   try {
-    const response = await axiosInstance.post(`${API_BASE}/login`, { email, password });
+    const response = await axiosInstance.post(`${API_BASE}/customer/login`, { email, password });
     const { accessToken, refreshToken } = response.data;
     saveToken(accessToken, refreshToken);
     return response.data;
