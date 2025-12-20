@@ -232,32 +232,50 @@ function InvoicePDFDocument({ booking }) {
     bookingReference = "N/A",
     room = {},
     checkIn = "",
-    price = 0,
+    checkOut = "",
+    created = "",
     customer = {},
   } = booking;
 
-  // customer may have firstName and lastName instead of name
-  const customerName = customer.firstName && customer.lastName 
-    ? `${customer.firstName} ${customer.lastName}`
-    : customer.name || "Customer Name";
+  // Customer name
+  const customerName =
+    customer.firstName && customer.lastName
+      ? `${customer.firstName} ${customer.lastName}`
+      : customer.name || "Customer Name";
 
-  const invoiceDate = new Date().toLocaleDateString();
+  // Invoice date should come from booking creation date
+  const invoiceDate = created
+    ? new Date(created).toLocaleDateString()
+    : new Date().toLocaleDateString();
+
   const invoiceNumber = bookingReference;
+
+  // Calculate nights
+  const nights =
+    checkIn && checkOut
+      ? Math.max(
+          1,
+          (new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24)
+        )
+      : 1;
+
+  const roomPrice = room.price || 0;
+  const subtotal = nights * roomPrice;
+
+  // No VAT on your invoice (based on provided example)
+  const vatRate = "0%";
+  const vatAmount = "0.00";
+  const totalPayable = subtotal.toFixed(2);
 
   const services = [
     {
-      date: checkIn,
+      date: `${checkIn} → ${checkOut}`,
       description: room.title || "Room booking",
-      qty: "1",
-      rate: `${price} USD`,
-      total: `${price} USD`,
+      qty: nights.toString(),
+      rate: `${roomPrice} USD`,
+      total: `${subtotal} USD`,
     },
   ];
-
-  const subtotal = parseFloat(price) || 0;
-  const vatRate = "20%";
-  const vatAmount = (subtotal * 0.2).toFixed(2);
-  const totalPayable = (subtotal + parseFloat(vatAmount)).toFixed(2);
 
   return (
     <Document>
@@ -267,8 +285,8 @@ function InvoicePDFDocument({ booking }) {
           <Text style={styles.companyTitle}>Ait-Isfoul Hotel</Text>
           <View style={styles.headerRight}>
             <Text style={styles.headerRightText}>Ait-Isfoul Hotel</Text>
-            <Text style={styles.headerRightText}>Company reg. no.: 098765432</Text>
-            <Text style={styles.headerRightText}>VAT reg. no.: GB98765432</Text>
+            <Text style={styles.headerRightText}>STE Kasbah Aitsfoul SARL</Text>
+            <Text style={styles.headerRightText}>ICE: 002054156000060</Text>
           </View>
         </View>
 
@@ -276,19 +294,21 @@ function InvoicePDFDocument({ booking }) {
         <View style={styles.providerCustomerSection}>
           <View style={styles.providerSection}>
             <Text style={styles.sectionHeader}>PROVIDER</Text>
-            <Text style={styles.providerCompany}>GoodCompany Ltd</Text>
-            <Text style={styles.providerText}>Company reg. no.: 098765432</Text>
-            <Text style={styles.providerText}>VAT reg. no.: GB98765432</Text>
-            <Text style={styles.providerText}>Firstname Lastname - Director</Text>
-            <Text style={styles.providerText}>9900 Tall Building</Text>
-            <Text style={styles.providerText}>100 Wide Street</Text>
-            <Text style={styles.providerText}>W1W London</Text>
-            <Text style={styles.providerText}>United Kingdom</Text>
+            <Text style={styles.providerCompany}>STE Kasbah Aitsfoul SARL</Text>
+            <Text style={styles.providerText}>
+              Compte number: 011565000001210000982580
+            </Text>
+            <Text style={styles.providerText}>SWIFT: BMCEMAMC</Text>
+            <Text style={styles.providerText}>Agence BMCE Zagora</Text>
+            <Text style={styles.providerText}>Zagora</Text>
+            <Text style={styles.providerText}>Morocco</Text>
           </View>
+
           <View style={styles.customerSection}>
             <Text style={styles.sectionHeader}>CUSTOMER</Text>
             <Text style={styles.providerText}>{customerName}</Text>
-            <Text style={styles.providerText}>{customer.email || "email@example.com"}</Text>
+            <Text style={styles.providerText}>{customer.email}</Text>
+            <Text style={styles.providerText}>{customer.phoneNumber}</Text>
           </View>
         </View>
 
@@ -296,13 +316,15 @@ function InvoicePDFDocument({ booking }) {
         <View style={styles.billingSection}>
           <Text style={styles.sectionHeader}>BILLING INFORMATION</Text>
           <Text style={styles.billingText}>
-            <Text style={styles.billingLabel}>BIC:</Text> ABCDGB21
+            <Text style={styles.billingLabel}>SWIFT:</Text> BMCEMAMC
           </Text>
           <Text style={styles.billingText}>
-            <Text style={styles.billingLabel}>IBAN:</Text> GB39 ABCD 0011 0011 0011 00
+            <Text style={styles.billingLabel}>IBAN:</Text>{" "}
+            MA6401156500001210000982580
           </Text>
-          <Text style={styles.billingText}>Account number: 01234567</Text>
-          <Text style={styles.billingText}>Sort code: 01-00-01</Text>
+          <Text style={styles.billingText}>
+            Account number: 011565000001210000982580
+          </Text>
         </View>
 
         {/* Invoice Details */}
@@ -322,22 +344,55 @@ function InvoicePDFDocument({ booking }) {
 
         {/* Services Table */}
         <View style={styles.servicesSection}>
-          <Text style={styles.servicesTitle}>Works completed / Services provided</Text>
+          <Text style={styles.servicesTitle}>
+            Works completed / Services provided
+          </Text>
           <View style={styles.table}>
             <View style={styles.tableHeader}>
-              <Text style={[styles.tableHeaderCell, styles.dateCol]}>Date</Text>
-              <Text style={[styles.tableHeaderCell, styles.descriptionCol]}>Description</Text>
+              <Text style={[styles.tableHeaderCell, styles.dateCol]}>
+                Date
+              </Text>
+              <Text style={[styles.tableHeaderCell, styles.descriptionCol]}>
+                Description
+              </Text>
               <Text style={[styles.tableHeaderCell, styles.qtyCol]}>Qty</Text>
-              <Text style={[styles.tableHeaderCell, styles.rateCol]}>Rate</Text>
-              <Text style={[styles.tableHeaderCell, styles.totalCol, { borderRight: "none" }]}>Total</Text>
+              <Text style={[styles.tableHeaderCell, styles.rateCol]}>
+                Rate
+              </Text>
+              <Text
+                style={[
+                  styles.tableHeaderCell,
+                  styles.totalCol,
+                  { borderRight: "none" },
+                ]}
+              >
+                Total
+              </Text>
             </View>
+
             {services.map((service, i) => (
               <View style={styles.tableRow} key={i}>
-                <Text style={[styles.tableCell, styles.dateCol]}>{service.date}</Text>
-                <Text style={[styles.tableCell, styles.descriptionCol]}>{service.description}</Text>
-                <Text style={[styles.tableCell, styles.qtyCol]}>{service.qty}</Text>
-                <Text style={[styles.tableCell, styles.rateCol]}>{service.rate}</Text>
-                <Text style={[styles.tableCell, styles.totalCol, { borderRight: "none" }]}>{service.total}</Text>
+                <Text style={[styles.tableCell, styles.dateCol]}>
+                  {service.date}
+                </Text>
+                <Text style={[styles.tableCell, styles.descriptionCol]}>
+                  {service.description}
+                </Text>
+                <Text style={[styles.tableCell, styles.qtyCol]}>
+                  {service.qty}
+                </Text>
+                <Text style={[styles.tableCell, styles.rateCol]}>
+                  {service.rate}
+                </Text>
+                <Text
+                  style={[
+                    styles.tableCell,
+                    styles.totalCol,
+                    { borderRight: "none" },
+                  ]}
+                >
+                  {service.total}
+                </Text>
               </View>
             ))}
           </View>
@@ -347,16 +402,44 @@ function InvoicePDFDocument({ booking }) {
         <View style={styles.vatSection}>
           <View style={styles.vatTable}>
             <View style={styles.vatHeaderRow}>
-              <Text style={[styles.vatHeaderCell, styles.vatBasisCol]}>VAT Basis</Text>
-              <Text style={[styles.vatHeaderCell, styles.vatRateCol]}>VAT rate</Text>
-              <Text style={[styles.vatHeaderCell, styles.vatAmountCol]}>VAT Amount</Text>
-              <Text style={[styles.vatHeaderCell, styles.vatTotalCol, { borderRight: "none" }]}>Total</Text>
+              <Text style={[styles.vatHeaderCell, styles.vatBasisCol]}>
+                VAT Basis
+              </Text>
+              <Text style={[styles.vatHeaderCell, styles.vatRateCol]}>
+                VAT rate
+              </Text>
+              <Text style={[styles.vatHeaderCell, styles.vatAmountCol]}>
+                VAT Amount
+              </Text>
+              <Text
+                style={[
+                  styles.vatHeaderCell,
+                  styles.vatTotalCol,
+                  { borderRight: "none" },
+                ]}
+              >
+                Total
+              </Text>
             </View>
             <View style={styles.vatRow}>
-              <Text style={[styles.vatCell, styles.vatBasisCol]}>{subtotal} USD</Text>
-              <Text style={[styles.vatCell, styles.vatRateCol]}>{vatRate}</Text>
-              <Text style={[styles.vatCell, styles.vatAmountCol]}>{vatAmount} USD</Text>
-              <Text style={[styles.vatCell, styles.vatTotalCol, { borderRight: "none" }]}>{totalPayable} USD</Text>
+              <Text style={[styles.vatCell, styles.vatBasisCol]}>
+                {subtotal} USD
+              </Text>
+              <Text style={[styles.vatCell, styles.vatRateCol]}>
+                {vatRate}
+              </Text>
+              <Text style={[styles.vatCell, styles.vatAmountCol]}>
+                {vatAmount} USD
+              </Text>
+              <Text
+                style={[
+                  styles.vatCell,
+                  styles.vatTotalCol,
+                  { borderRight: "none" },
+                ]}
+              >
+                {totalPayable} USD
+              </Text>
             </View>
           </View>
 
@@ -367,7 +450,9 @@ function InvoicePDFDocument({ booking }) {
             </View>
             <View style={styles.grandTotalRow}>
               <Text style={styles.grandTotalLabel}>Total Payable:</Text>
-              <Text style={styles.grandTotalValue}>{totalPayable} USD</Text>
+              <Text style={styles.grandTotalValue}>
+                {totalPayable} USD
+              </Text>
             </View>
           </View>
         </View>
@@ -375,6 +460,7 @@ function InvoicePDFDocument({ booking }) {
     </Document>
   );
 }
+
 
 
 export default function ReservationList() {
